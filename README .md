@@ -150,4 +150,4 @@ MIT — free to use, fork, and build on.
 
 ---
 
-*Built by Mariam Ramadan · Targeting IBM PM Intern 2026*
+*Built by Mariam Elsayed*
