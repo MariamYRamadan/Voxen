@@ -149,5 +149,4 @@ Building PulseAI reinforced three core PM skills:
 MIT — free to use, fork, and build on.
 
 ---
-
-*Built by [Your Name] · [Your School] · Targeting IBM PM Intern 2026*
+                
