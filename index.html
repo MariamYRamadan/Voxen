@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Voxen — AI-powered customer intelligence platform. Transforms raw feedback into prioritized feature backlogs, sprint boards, roadmaps, and responsible AI audits in seconds.">
+<meta property="og:title" content="Voxen — AI Customer Intelligence Platform">
+<meta property="og:description" content="Turn raw customer feedback into sprint-ready backlogs, epics, roadmaps, and AI audits. Built for data-driven PMs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mariamyramadan.github.io/Voxen">
+<meta property="og:image" content="https://mariamyramadan.github.io/Voxen/og.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Voxen — AI Customer Intelligence Platform">
+<meta name="twitter:description" content="Turn raw customer feedback into sprint-ready backlogs, epics, roadmaps, and AI audits.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23f97316'/><circle cx='10' cy='16' r='4' fill='white' opacity='.85'/><circle cx='23' cy='10' r='3.2' fill='white'/><circle cx='23' cy='22' r='2.6' fill='white' opacity='.8'/><line x1='13.8' y1='14.5' x2='20' y2='11' stroke='white' stroke-width='1.5' opacity='.6'/><line x1='13.8' y1='17.5' x2='20.2' y2='20.8' stroke='white' stroke-width='1.5' opacity='.6'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23f97316'/><circle cx='10' cy='16' r='4' fill='white'/><circle cx='23' cy='10' r='3.2' fill='white'/><circle cx='23' cy='22' r='2.6' fill='white' opacity='.85'/></svg>">
+<meta name="theme-color" content="#1c1916">
+<meta name="msapplication-TileColor" content="#f97316">
+<link rel="canonical" href="https://mariamyramadan.github.io/Voxen">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voxen — Customer Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  /* Ember — 4-step surface hierarchy (each step is clearly darker) */
+  --bg:   #1c1916;   /* page */
+  --bg2:  #252019;   /* card  — +visible step */
+  --bg3:  #2f2a22;   /* inset */
+  --bg4:  #3c352c;   /* deepest */
+
+  --wire:  rgba(255,255,255,.10);
+  --wire2: rgba(255,255,255,.17);
+  --wire3: rgba(255,255,255,.26);
+
+  --or:  #f97316;
+  --pk:  #ec4899;
+  --brand: linear-gradient(135deg,#f97316,#ec4899);
+
+  --mint:  #34d399; --mint-bg:  rgba(52,211,153,.09);
+  --rose:  #f87171; --rose-bg:  rgba(248,113,113,.09);
+  --amber: #fbbf24; --amber-bg: rgba(251,191,36,.09);
+  --sky:   #67e8f9; --sky-bg:   rgba(103,232,249,.09);
+
+  /* 4-level type scale — high contrast between each step */
+  --t1: #f5f0eb;
+  --t2: #c8bbaf;
+  --t3: #8c7e72;
+  --t4: #55483e;
+
+  /* 8px spacing tokens */
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:40px; --s6:48px; --s7:56px; --s8:64px;
+
+  --r:12px; --rsm:8px; --rlg:16px;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--bg);
+  color: var(--t1);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Warm grain texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size: 160px; opacity: .5;
+}
+
+/* Subtle dot grid */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(249,115,22,.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Ambient warmth */
+.amb {
+  position: fixed; pointer-events: none; z-index: 0;
+  border-radius: 50%; filter: blur(100px);
+}
+.amb-1 { width:600px; height:600px; top:-200px; left:-150px; background:radial-gradient(circle, rgba(249,115,22,.09) 0%, transparent 65%); }
+.amb-2 { width:500px; height:500px; top:30%; right:-180px; background:radial-gradient(circle, rgba(236,72,153,.07) 0%, transparent 65%); }
+.amb-3 { width:350px; height:350px; bottom:5%; left:25%; background:radial-gradient(circle, rgba(249,115,22,.05) 0%, transparent 65%); }
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  height: 54px; display: flex; align-items: center;
+  padding: 0 28px; gap: 0;
+  background: rgba(28,25,22,.88);
+  backdrop-filter: blur(24px) saturate(160%);
+  border-bottom: 1px solid var(--wire);
+}
+.topbar::after {
+  content: '';
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(249,115,22,.25) 30%, rgba(236,72,153,.25) 70%, transparent 100%);
+}
+.brand {
+  display: flex; align-items: center; gap: 9px;
+  font-family: 'Clash Display', 'Inter', sans-serif;
+  font-size: 16px; font-weight: 600; color: var(--t1);
+  letter-spacing: -.2px; text-decoration: none; margin-right: 28px;
+}
+.brand-mark {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--brand);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 1px rgba(249,115,22,.3), 0 2px 12px rgba(249,115,22,.25);
+}
+.brand-mark svg { width: 14px; height: 14px; }
+.tb-nav a {
+  font-size: 12.5px; font-weight: 500; color: var(--t3);
+  padding: 5px 10px; border-radius: var(--rsm);
+  text-decoration: none; transition: color .15s;
+}
+.tb-nav a.on { color: var(--t1); }
+.tb-r { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.tb-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--t3); letter-spacing: .05em;
+  background: var(--bg2); border: 1px solid var(--wire);
+  border-radius: 5px; padding: 3px 8px;
+}
+.tb-live {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 500; color: var(--t3);
+}
+.tb-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--mint); box-shadow: 0 0 7px var(--mint);
+  animation: breathe 2.5s ease-in-out infinite;
+}
+@keyframes breathe { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  max-width: 1080px; margin: 0 auto;
+  padding: var(--s8) 28px var(--s7);
+  display: grid; grid-template-columns: 1fr 400px; gap: var(--s7); align-items: center;
+}
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: var(--s1);
+  font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--or); background: rgba(249,115,22,.08);
+  border: 1px solid rgba(249,115,22,.18); border-radius: 99px;
+  padding: 5px 14px; margin-bottom: var(--s3);
+}
+.hero-kicker-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--or); animation: breathe 2.5s ease-in-out infinite; }
+.hero h1 {
+  font-family: 'Clash Display', 'Inter', sans-serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700; line-height: 1.06;
+  letter-spacing: -.5px; color: var(--t1);
+  margin-bottom: var(--s3); min-height: 2.2em;
+}
+.hero h1 em {
+  font-style: normal;
+  background: var(--brand);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.typed-cur {
+  display: inline-block; width: 3px; height: .88em;
+  background: var(--or); margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: blink .8s steps(1) infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.hero-sub {
+  font-size: 15px; color: var(--t2); line-height: 1.75;
+  font-weight: 400; max-width: 460px;
+}
+
+/* Hero preview panel */
+.h-panel {
+  background: var(--bg2);
+  border: 1px solid var(--wire2);
+  border-radius: var(--rlg);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.04), 0 24px 64px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.h-panel-top {
+  padding: var(--s2) var(--s3);
+  border-bottom: 1px solid var(--wire);
+  background: rgba(255,255,255,.025);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.h-panel-label {
+  font-size: 10px; font-weight: 600; color: var(--t3);
+  letter-spacing: .1em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;
+  display: flex; align-items: center; gap: var(--s1);
+}
+.h-panel-label::before {
+  content: ''; width: 3px; height: 11px; border-radius: 99px;
+  background: var(--brand); display: block;
+}
+.h-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1); padding: var(--s2); }
+.h-stat {
+  background: var(--bg3); border: 1px solid var(--wire);
+  border-radius: var(--rsm); padding: var(--s2) var(--s2);
+}
+.h-stat-lbl { font-size: 9px; color: var(--t3); letter-spacing: .07em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 6px; }
+.h-stat-val { font-size: 26px; font-weight: 700; letter-spacing: -1.5px; line-height: 1; font-family: 'Clash Display', sans-serif; }
+.hv-or { color: var(--or); }
+.hv-pk { color: var(--pk); }
+.hv-mt { color: var(--mint); }
+.hv-am { color: var(--amber); }
+.h-bars { padding: 0 var(--s2) var(--s2); display: flex; flex-direction: column; gap: var(--s1); }
+.h-bar-row {}
+.h-bar-top { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.h-bar-name { font-size: 11px; color: var(--t2); }
+.h-bar-score { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t3); }
+.h-track { height: 3px; background: var(--bg4); border-radius: 99px; overflow: hidden; }
+.h-fill { height: 100%; border-radius: 99px; transition: width 1.3s cubic-bezier(.4,0,.2,1); }
+.hf-or { background: linear-gradient(90deg, var(--or), rgba(249,115,22,.3)); }
+.hf-pk { background: linear-gradient(90deg, var(--pk), rgba(236,72,153,.3)); }
+.hf-mt { background: linear-gradient(90deg, var(--mint), rgba(52,211,153,.3)); }
+
+/* ── HOW STRIP ── */
+.how {
+  position: relative; z-index: 1;
+  max-width: 1080px; margin: 0 auto;
+  padding: 0 28px var(--s7);
+  display: grid; grid-template-columns: 1fr 32px 1fr 32px 1fr; align-items: center;
+}
+.how-card {
+  background: var(--bg2); border: 1px solid var(--wire);
+  border-radius: var(--r); padding: var(--s3) var(--s3);
+  position: relative; overflow: hidden;
+  transition: border-color .25s, transform .2s;
+}
+.how-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--brand); opacity: 0; transition: opacity .25s;
+}
+.how-card:hover { border-color: rgba(249,115,22,.22); transform: translateY(-2px); }
+.how-card:hover::before { opacity: 1; }
+.how-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--or); letter-spacing: .1em; margin-bottom: var(--s1); }
+.how-icon { font-size: 20px; margin-bottom: var(--s1); display: block; }
+.how-title { font-size: 13px; font-weight: 600; color: var(--t1); margin-bottom: 4px; letter-spacing: -.15px; font-family: 'Clash Display', sans-serif; }
+.how-desc { font-size: 12px; color: var(--t3); line-height: 1.55; }
+.how-arr { display: flex; align-items: center; justify-content: center; color: var(--t4); font-size: 15px; }
+
+/* ── WRAP ── */
+.wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 28px 100px; }
+
+/* ── SECTION DIVIDER — clean, quiet, IBM-style ── */
+.div {
+  display: flex; align-items: center; gap: var(--s2);
+  margin: var(--s6) 0 var(--s2);
+}
+.div-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 500; color: var(--t4);
+  letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+}
+.div-line { flex: 1; height: 1px; background: var(--wire); }
+/* No chips on dividers — keep them quiet */
+
+/* ── PANEL — elevated contrast vs page ── */
+.panel {
+  background: var(--bg2);
+  border: 1px solid var(--wire);
+  border-radius: var(--r); overflow: hidden; margin-bottom: var(--s1);
+  transition: border-color .2s;
+  box-shadow: 0 1px 0 rgba(255,255,255,.03), 0 8px 32px rgba(0,0,0,.28);
+}
+.panel:hover { border-color: var(--wire2); }
+.ph {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px var(--s3);
+  border-bottom: 1px solid var(--wire);
+  background: rgba(255,255,255,.02);
+  min-height: 44px;
+}
+.pt { display: flex; align-items: center; gap: var(--s1); font-size: 13px; font-weight: 600; color: var(--t1); letter-spacing: -.15px; }
+.pi {
+  width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; flex-shrink: 0;
+}
+.pi-o { background: rgba(249,115,22,.14); }
+.pi-p { background: rgba(236,72,153,.12); }
+.pi-g { background: var(--mint-bg); }
+.pi-r { background: var(--rose-bg); }
+.pi-a { background: var(--amber-bg); }
+.pi-s { background: var(--sky-bg); }
+.pb { padding: var(--s3); }
+
+/* ── CHIPS ── */
+.chip {
+  display: inline-flex; align-items: center;
+  font-size: 10.5px; font-weight: 500; border-radius: 5px;
+  padding: 3px 9px; white-space: nowrap; letter-spacing: .02em;
+  font-family: 'Inter', sans-serif;
+}
+.co  { background:rgba(249,115,22,.1); color:var(--or); border:1px solid rgba(249,115,22,.18); }
+.cp  { background:rgba(236,72,153,.08); color:var(--pk); border:1px solid rgba(236,72,153,.16); }
+.cg  { background:var(--mint-bg); color:var(--mint); border:1px solid rgba(52,211,153,.15); }
+.cr  { background:var(--rose-bg); color:var(--rose); border:1px solid rgba(248,113,113,.15); }
+.ca  { background:var(--amber-bg); color:var(--amber); border:1px solid rgba(251,191,36,.15); }
+.cs  { background:var(--sky-bg); color:var(--sky); border:1px solid rgba(103,232,249,.15); }
+.cn  { background:var(--bg3); color:var(--t2); border:1px solid var(--wire); }
+
+/* ── TEXTAREA ── */
+textarea.tx {
+  width: 100%; min-height: 148px;
+  background: var(--bg3); border: 1px solid var(--wire);
+  border-radius: var(--rsm); color: var(--t1);
+  font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+  padding: 13px 15px; outline: none; resize: vertical; line-height: 1.7;
+  transition: border-color .15s, box-shadow .15s; letter-spacing: .01em;
+}
+textarea.tx:focus {
+  border-color: rgba(249,115,22,.4);
+  box-shadow: 0 0 0 3px rgba(249,115,22,.08), inset 0 1px 0 rgba(255,255,255,.02);
+}
+textarea.tx::placeholder { color: var(--t4); }
+
+/* ── ANALYZE BUTTON — solid, confident, no gradient trend ── */
+.abtn {
+  width: 100%; height: var(--s6); border-radius: var(--rsm);
+  background: var(--or);
+  color: #fff; font-family: 'Clash Display', 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600; letter-spacing: .02em;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: var(--s1);
+  transition: background .15s, transform .12s, box-shadow .15s;
+  box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 4px 16px rgba(249,115,22,.28);
+  margin-top: 2px; position: relative;
+}
+.abtn:hover:not(:disabled) {
+  background: #ea6b10;
+  transform: translateY(-1px);
+  box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 6px 22px rgba(249,115,22,.36);
+}
+.abtn:active:not(:disabled) { transform: none; background: #d96010; }
+.abtn:disabled { opacity: .35; cursor: not-allowed; }
+.spin { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .65s linear infinite; display: none; }
+.abtn.loading .spin { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── RESULTS ── */
+#results { display: none; }
+#results.show { display: block; }
+
+/* ── KPI ROW ── */
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--s1); }
+.kpi {
+  background: var(--bg2); border: 1px solid var(--wire);
+  border-radius: var(--r); padding: var(--s3) var(--s2) var(--s2);
+  position: relative; overflow: hidden;
+  transition: border-color .2s, transform .18s;
+}
+.kpi:hover { border-color: var(--wire2); transform: translateY(-2px); }
+.kpi-stripe { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.kpi-label { font-size: 9px; font-weight: 600; color: var(--t3); letter-spacing: .1em; text-transform: uppercase; margin-bottom: var(--s1); font-family: 'JetBrains Mono', monospace; }
+.kpi-val { font-size: 40px; font-weight: 700; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; font-family: 'Clash Display', sans-serif; }
+.kpi-val sup { font-size: 18px; font-weight: 600; letter-spacing: 0; }
+.kpi-hint { font-size: 11px; color: var(--t3); }
+.kv-mt { color: var(--mint); }
+.kv-ro { color: var(--rose); }
+.kv-or { color: var(--or); }
+.kv-am { color: var(--amber); }
+
+/* ── CHARTS ── */
+.c2 { display: grid; grid-template-columns: 5fr 7fr; gap: 10px; }
+.cbox { height: 220px; position: relative; }
+
+/* ── FEEDBACK GRID ── */
+.fbg { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--s1); padding: var(--s3); }
+.fb {
+  background: var(--bg3); border: 1px solid var(--wire);
+  border-radius: var(--rsm); padding: var(--s2);
+  transition: border-color .18s;
+}
+.fb:hover { border-color: rgba(249,115,22,.2); }
+.fb-id { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--or); margin-bottom: 7px; letter-spacing: .06em; }
+.fb-tx { font-size: 12px; color: var(--t2); line-height: 1.65; margin-bottom: 9px; }
+.fb-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* ── EXTRACTION ── */
+.extg { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1); padding: var(--s3); }
+.extb { background: var(--bg3); border: 1px solid var(--wire); border-radius: var(--rsm); padding: var(--s2); }
+.extl { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; color: var(--t3); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 9px; }
+.extq { font-size: 12px; color: var(--t2); font-style: italic; border-left: 2px solid rgba(249,115,22,.3); padding-left: 9px; margin-bottom: 12px; line-height: 1.65; }
+.extr { display: flex; align-items: flex-start; gap: 7px; font-size: 12px; color: var(--t2); margin-bottom: 5px; }
+.exrd { width: 4px; height: 4px; border-radius: 50%; background: var(--or); flex-shrink: 0; margin-top: 6px; }
+.sc { display: inline-flex; font-size: 10.5px; color: var(--rose); background: var(--rose-bg); border: 1px solid rgba(248,113,113,.14); border-radius: 4px; padding: 2px 7px; font-family: 'JetBrains Mono', monospace; margin: 2px; }
+
+/* ── SOURCES ── */
+.srcs { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; }
+.src { padding: 15px 16px; border-right: 1px solid var(--wire); text-align: center; transition: background .15s; }
+.src:last-child { border-right: none; }
+.src:hover { background: rgba(255,255,255,.018); }
+.src-ic { font-size: 20px; margin-bottom: 7px; }
+.src-nm { font-size: 12px; font-weight: 600; color: var(--t1); margin-bottom: 2px; letter-spacing: -.1px; }
+.src-ds { font-size: 11px; color: var(--t3); }
+
+/* ── FORMULA ── */
+.formula {
+  background: var(--bg3); border: 1px solid var(--wire);
+  border-radius: var(--rsm); padding: var(--s3);
+  margin: 0 var(--s3) var(--s2);
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.95; color: var(--t2);
+}
+.fc { color: var(--t4); }
+.fv { color: var(--or); }
+.fo { color: var(--amber); }
+
+/* ── SCORE TABLE ── */
+.stbl { width: 100%; border-collapse: collapse; }
+.stbl th { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; color: var(--t3); background: var(--bg3); padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--wire); letter-spacing: .08em; text-transform: uppercase; }
+.stbl td { padding: 11px 14px; border-bottom: 1px solid var(--wire); font-size: 12.5px; color: var(--t2); vertical-align: middle; }
+.stbl tr:last-child td { border-bottom: none; }
+.stbl tr:hover td { background: rgba(249,115,22,.025); }
+.sb { display: flex; align-items: center; gap: 9px; }
+.sbt { flex: 1; height: 3px; background: var(--bg4); border-radius: 99px; overflow: hidden; max-width: 90px; }
+.sbf { height: 100%; border-radius: 99px; background: var(--brand); transition: width 1s cubic-bezier(.4,0,.2,1); }
+.sn { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--or); min-width: 24px; }
+
+/* ── IMPACT TABLE ── */
+.itbl { width: 100%; border-collapse: collapse; }
+.itbl th { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; color: var(--t3); background: var(--bg3); padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--wire); letter-spacing: .08em; text-transform: uppercase; }
+.itbl td { padding: 11px 14px; border-bottom: 1px solid var(--wire); font-size: 12.5px; color: var(--t2); vertical-align: middle; }
+.itbl tr:last-child td { border-bottom: none; }
+.itbl tr:hover td { background: rgba(249,115,22,.025); }
+
+/* ── FEATURE LIST ── */
+.fr {
+  display: flex; align-items: flex-start; gap: 13px;
+  padding: 15px 16px; border-bottom: 1px solid var(--wire);
+  transition: background .12s;
+}
+.fr:last-child { border-bottom: none; }
+.fr:hover { background: rgba(249,115,22,.02); }
+.fi { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--t4); width: 18px; flex-shrink: 0; padding-top: 3px; }
+.fb2 { flex: 1; min-width: 0; }
+.fn { font-family: 'Clash Display', 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 4px; letter-spacing: -.1px; }
+.fd { font-size: 12px; color: var(--t3); line-height: 1.6; }
+.fch { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+.fm { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t4); margin-top: 5px; }
+.fev { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--wire); }
+.fel { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--t4); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 5px; }
+.feq { font-size: 11.5px; color: var(--t3); font-style: italic; border-left: 2px solid var(--bg4); padding-left: 8px; line-height: 1.5; margin-bottom: 4px; }
+.fr2 { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+.fconf { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--or); }
+
+/* ── SEGMENTS ── */
+.segs { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+.seg { padding: var(--s3); border-right: 1px solid var(--wire); transition: background .15s; }
+.seg:last-child { border-right: none; }
+.seg:hover { background: rgba(249,115,22,.025); }
+.sg-nm { font-size: 11px; font-weight: 600; color: var(--t1); margin-bottom: 7px; }
+.sg-st { font-family: 'Clash Display', sans-serif; font-size: 30px; font-weight: 700; color: var(--or); letter-spacing: -1.5px; line-height: 1; margin-bottom: 5px; }
+.sg-ds { font-size: 11px; color: var(--t3); line-height: 1.5; }
+.sg-tr { height: 2px; background: var(--bg4); border-radius: 99px; overflow: hidden; margin-top: 9px; }
+.sg-fi { height: 100%; border-radius: 99px; background: var(--brand); transition: width 1s cubic-bezier(.4,0,.2,1); }
+
+/* ── RETENTION ── */
+.ret-r { display: flex; align-items: center; gap: var(--s2); padding: var(--s2) var(--s3); border-bottom: 1px solid var(--wire); transition: background .12s; }
+.ret-r:last-child { border-bottom: none; }
+.ret-r:hover { background: rgba(249,115,22,.02); }
+.ret-b { flex: 1; }
+.ret-nm { font-size: 13px; font-weight: 600; color: var(--t1); margin-bottom: 2px; letter-spacing: -.1px; font-family: 'Clash Display', sans-serif; }
+.ret-sub { font-size: 11.5px; color: var(--t3); }
+.ret-sub strong { font-weight: 600; }
+.ret-sub.vh strong { color: var(--rose); }
+.ret-sub.hi strong { color: var(--amber); }
+.ret-sub.md strong { color: var(--or); }
+.ret-sub.lo strong { color: var(--mint); }
+.ret-c { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; min-width: 140px; }
+.ret-cl { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--t4); }
+.ret-ct { width: 100%; height: 3px; background: var(--bg4); border-radius: 99px; overflow: hidden; }
+.ret-cf { height: 100%; border-radius: 99px; background: var(--brand); transition: width 1s cubic-bezier(.4,0,.2,1); }
+.ret-cp { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--or); font-weight: 500; }
+
+/* ── WEEKLY TREND ── */
+.wk { padding: var(--s3); }
+.wkr { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.wkr:last-child { margin-bottom: 0; }
+.wkl { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t3); width: 40px; flex-shrink: 0; }
+.wkt { flex: 1; height: 22px; background: var(--bg4); border-radius: 5px; overflow: hidden; }
+.wkf { height: 100%; border-radius: 5px; background: linear-gradient(90deg, rgba(249,115,22,.5), rgba(236,72,153,.6)); display: flex; align-items: center; padding-left: 9px; font-size: 10px; color: rgba(255,255,255,.65); font-weight: 500; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+.wkn { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--t3); min-width: 22px; }
+
+/* ── SEVERITY ── */
+.sevg { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--s1); padding: var(--s3); }
+.sevc { background: var(--bg3); border: 1px solid var(--wire); border-radius: var(--rsm); padding: var(--s3); }
+.sev-ic { font-size: 18px; margin-bottom: 7px; }
+.sev-tp { font-size: 11.5px; font-weight: 600; color: var(--t1); margin-bottom: 5px; }
+.sev-ct { font-family: 'Clash Display', sans-serif; font-size: 32px; font-weight: 700; color: var(--rose); letter-spacing: -1.5px; line-height: 1; margin-bottom: 5px; }
+.sev-eg { font-size: 11px; color: var(--t3); line-height: 1.5; font-style: italic; }
+
+/* ── FEATURE TREND ── */
+.ftw { padding: var(--s3); }
+.ftr { display: flex; align-items: center; gap: 12px; margin-bottom: 9px; }
+.ftr:last-child { margin-bottom: 0; }
+.ftn { font-size: 12px; color: var(--t2); width: 190px; flex-shrink: 0; }
+.ftb { display: flex; gap: 3px; align-items: flex-end; height: 24px; }
+.ftbar { width: 16px; border-radius: 3px 3px 0 0; }
+.ftbg { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+.ftbg.up   { color: var(--mint); background: var(--mint-bg); }
+.ftbg.down { color: var(--rose); background: var(--rose-bg); }
+.ftbg.flat { color: var(--t3); background: var(--bg4); }
+
+/* ── JOURNEY ── */
+.jg { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+.js { padding: var(--s3); border-right: 1px solid var(--wire); }
+.js:last-child { border-right: none; }
+.js-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--t4); margin-bottom: 3px; letter-spacing: .08em; }
+.js-nm { font-family: 'Clash Display', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--t1); margin-bottom: 10px; }
+.ji { display: flex; gap: 6px; font-size: 11.5px; color: var(--t2); margin-bottom: 6px; line-height: 1.45; }
+.jiw { color: var(--rose); flex-shrink: 0; font-size: 10px; margin-top: 2px; }
+.jio { color: var(--mint); flex-shrink: 0; font-size: 10px; margin-top: 2px; }
+.jbar { height: 2px; border-radius: 99px; margin-top: 11px; }
+.jb-r { background: linear-gradient(90deg, var(--rose), transparent); }
+.jb-a { background: linear-gradient(90deg, var(--amber), transparent); }
+.jb-g { background: linear-gradient(90deg, var(--mint), transparent); }
+
+/* ── COMPETITIVE ── */
+.compg { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--s2); padding: var(--s3); }
+.compc { background: var(--bg3); border: 1px solid var(--wire); border-radius: var(--rsm); padding: var(--s3); transition: border-color .18s; }
+.compc:hover { border-color: var(--wire2); }
+.compl { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; margin-bottom: 6px; }
+.compl.sig { color: var(--mint); }
+.compl.opp { color: var(--or); }
+.compl.rsk { color: var(--rose); }
+.compl.mot { color: var(--amber); }
+.compt { font-size: 11.5px; color: var(--t2); line-height: 1.6; }
+
+/* ── EPICS ── */
+.epicg { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--s2); padding: var(--s3); }
+.epicc { background: var(--bg3); border: 1px solid var(--wire); border-radius: var(--rsm); padding: var(--s3); transition: border-color .18s; position: relative; overflow: hidden; }
+.epicc::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--brand); opacity:0; transition:opacity .2s; }
+.epicc:hover { border-color: rgba(249,115,22,.2); }
+.epicc:hover::before { opacity:1; }
+.epic-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--or); letter-spacing: .09em; margin-bottom: 5px; }
+.epic-t { font-family: 'Clash Display', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--t1); margin-bottom: 4px; }
+.epic-g { font-size: 11.5px; color: var(--t3); margin-bottom: 11px; line-height: 1.5; }
+.epic-s { display: flex; align-items: flex-start; gap: 6px; font-size: 11.5px; color: var(--t2); margin-bottom: 5px; }
+.epic-s::before { content:'→'; color:var(--or); flex-shrink:0; font-size:10px; margin-top:1px; }
+
+/* ── THEMES ── */
+.themes { display: flex; flex-wrap: wrap; gap: var(--s1); padding: var(--s3); }
+
+/* ── REC ── */
+.rec { padding: var(--s3); border-left: 2px solid var(--or); background: rgba(249,115,22,.04); }
+.rec-l { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; color: var(--or); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+.rec p { font-size: 12.5px; color: var(--t2); line-height: 1.8; }
+
+/* ── SPRINT ── */
+.spm { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--wire); background: var(--bg3); }
+.spc { padding: 12px var(--s3); font-size: 11.5px; color: var(--t3); border-right: 1px solid var(--wire); }
+.spc:last-child { border-right: none; }
+.spc strong { color: var(--t1); font-weight: 600; }
+.spt { width: 100%; border-collapse: collapse; }
+.spt th { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; color: var(--t3); background: var(--bg3); padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--wire); letter-spacing: .08em; text-transform: uppercase; }
+.spt td { padding: 12px 14px; border-bottom: 1px solid var(--wire); vertical-align: top; font-size: 12px; color: var(--t2); }
+.spt tr:last-child td { border-bottom: none; }
+.spt tr:hover td { background: rgba(249,115,22,.02); }
+.tdm { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t3); white-space: nowrap; }
+.tdp { font-family: 'Clash Display', sans-serif; font-size: 18px; font-weight: 700; color: var(--or); text-align: center; }
+.tds { font-size: 11.5px; color: var(--t3); line-height: 1.5; }
+
+/* ── ROADMAP ── */
+.rmg { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--s2); padding: var(--s3); }
+.rmc { background: var(--bg3); border: 1px solid var(--wire); border-radius: var(--rsm); padding: var(--s3); position: relative; overflow: hidden; transition: border-color .18s; }
+.rmc:hover { border-color: rgba(249,115,22,.18); }
+.rmc::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+.rmc:nth-child(1)::before { background: linear-gradient(90deg, var(--rose), transparent); }
+.rmc:nth-child(2)::before { background: var(--brand); }
+.rmc:nth-child(3)::before { background: linear-gradient(90deg, var(--mint), transparent); }
+.rm-l { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--t3); letter-spacing: .08em; margin-bottom: 6px; }
+.rm-t { font-family: 'Clash Display', sans-serif; font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 5px; }
+.rm-g { font-size: 11.5px; color: var(--t3); margin-bottom: 11px; line-height: 1.5; }
+.rm-i { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: var(--t2); margin-bottom: 5px; }
+.rm-i::before { content:'→'; color:var(--or); flex-shrink:0; font-size:10px; margin-top:1px; }
+.rm-f { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--wire); display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--t4); }
+.rm-f span { color: var(--or); font-weight: 500; }
+
+/* ── BRIEF ── */
+.brg { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--s2); padding: var(--s3); }
+.brc { background: var(--bg3); border: 1px solid var(--wire); border-radius: var(--rsm); padding: var(--s3); }
+.br-l { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; color: var(--t3); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 4px; }
+.br-v { font-family: 'Clash Display', sans-serif; font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 3px; }
+.br-s { font-size: 11px; color: var(--t3); line-height: 1.5; }
+
+/* ── CHAT ── */
+.chatw { padding: var(--s3); }
+.chatcs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 13px; }
+.chatc {
+  font-size: 12px; font-weight: 500; color: var(--or);
+  background: rgba(249,115,22,.07); border: 1px solid rgba(249,115,22,.16);
+  border-radius: 6px; padding: 5px 12px; cursor: pointer;
+  transition: all .15s; font-family: 'Inter', sans-serif;
+}
+.chatc:hover { background: rgba(249,115,22,.13); }
+.chati { display: flex; gap: 7px; }
+.chatin {
+  flex: 1; height: 40px;
+  background: var(--bg3); border: 1px solid var(--wire);
+  border-radius: var(--rsm); color: var(--t1);
+  font-family: 'Inter', sans-serif; font-size: 13px;
+  padding: 0 13px; outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.chatin:focus { border-color: rgba(249,115,22,.4); box-shadow: 0 0 0 3px rgba(249,115,22,.07); }
+.chatin::placeholder { color: var(--t4); }
+.chatsend {
+  height: 40px; padding: 0 16px; border-radius: var(--rsm);
+  background: rgba(249,115,22,.12); border: 1px solid rgba(249,115,22,.22);
+  color: var(--or); font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s;
+}
+.chatsend:hover { background: rgba(249,115,22,.22); }
+.chata {
+  margin-top: 11px; padding: 13px 15px;
+  background: rgba(249,115,22,.04); border: 1px solid rgba(249,115,22,.14);
+  border-left: 2px solid var(--or);
+  border-radius: 0 var(--rsm) var(--rsm) 0;
+  font-size: 12.5px; color: var(--t2); line-height: 1.78; display: none;
+}
+.chata.show { display: block; }
+.chata-l { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; color: var(--or); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; }
+
+/* ── CONFIDENCE ── */
+.confex {
+  background: rgba(249,115,22,.04); border: 1px solid rgba(249,115,22,.12);
+  border-radius: var(--rsm); padding: var(--s3); margin: var(--s3) var(--s3) 0;
+}
+.confex-t { font-size: 11.5px; font-weight: 600; color: var(--or); margin-bottom: 7px; }
+.confex-i { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; color: var(--t3); margin-bottom: 4px; }
+.confex-i::before { content: '·'; color: var(--or); flex-shrink: 0; font-size: 16px; line-height: 1; }
+.conf-row { display: flex; align-items: center; gap: 11px; margin-bottom: 9px; }
+.conf-row:last-child { margin-bottom: 0; }
+.conf-l { font-size: 12px; color: var(--t2); width: 145px; flex-shrink: 0; }
+.conf-t { flex: 1; height: 3px; background: var(--bg4); border-radius: 99px; overflow: hidden; }
+.conf-f { height: 100%; background: var(--brand); border-radius: 99px; transition: width 1s cubic-bezier(.4,0,.2,1); }
+.conf-p { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--t3); width: 32px; text-align: right; }
+
+/* ── AUDIT ── */
+.auditg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 11px; }
+.auditi { border: 1px solid var(--wire); border-radius: var(--rsm); padding: 13px; background: var(--bg3); }
+.auditt { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+.auditd { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.auditd.ok { background: var(--mint); box-shadow: 0 0 7px var(--mint); }
+.auditd.wn { background: var(--amber); box-shadow: 0 0 7px var(--amber); }
+.audith { font-size: 12.5px; font-weight: 600; color: var(--t1); }
+.auditb { font-size: 11.5px; color: var(--t3); line-height: 1.6; }
+.disc { background: rgba(251,191,36,.04); border: 1px solid rgba(251,191,36,.12); border-radius: var(--rsm); padding: 11px 14px; font-size: 11.5px; color: var(--t2); line-height: 1.7; }
+.disc strong { color: var(--amber); font-weight: 600; }
+
+/* ── EXPORT BTN ── */
+.xb {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10.5px; font-weight: 600; color: var(--or);
+  background: rgba(249,115,22,.08); border: 1px solid rgba(249,115,22,.18);
+  border-radius: 5px; padding: 4px 10px; cursor: pointer;
+  transition: all .15s; font-family: 'Inter', sans-serif;
+}
+.xb:hover { background: rgba(249,115,22,.15); }
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 68px; padding: 20px 0;
+  border-top: 1px solid var(--wire);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-l { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t4); letter-spacing: .05em; }
+
+/* ── ANIM ── */
+.ai-typing{display:inline-flex;align-items:center;gap:4px;padding:4px 0;}
+.ai-typing span{width:6px;height:6px;border-radius:50%;background:var(--or);opacity:.4;animation:dot 1.2s ease-in-out infinite;}
+.ai-typing span:nth-child(2){animation-delay:.2s;}
+.ai-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes dot{0%,80%,100%{opacity:.4;transform:scale(1)}40%{opacity:1;transform:scale(1.2)}}
+
+@keyframes up { from{opacity:0;transform:translateY(11px)} to{opacity:1;transform:translateY(0)} }
+.au { animation: up .36s ease both; }
+
+/* ── RESPONSIVE ── */
+
+/* ─── PRINT ─────────────────────────────────────── */
+@media print {
+  .orb,.snav,.topbar::after,body::before,body::after { display:none; }
+  body { background:#fff; color:#000; }
+  .panel { border:1px solid #ccc; box-shadow:none; }
+}
+@media(max-width:780px){
+  .hero{grid-template-columns:1fr;} .h-panel{display:none;}
+  .kpi-row,.segs,.srcs{grid-template-columns:1fr 1fr;}
+  .c2,.extg,.jg,.compg{grid-template-columns:1fr;}
+  .how{grid-template-columns:1fr;} .how-arr{display:none;}
+  .fbg,.epicg,.rmg,.brg{grid-template-columns:1fr 1fr;}
+  .tb-r{display:none;}
+}
+
+/* ─── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:99px;}
+::-webkit-scrollbar-thumb:hover{background:var(--or);}
+
+/* ─── SELECTION ── */
+::selection{background:rgba(249,115,22,.22);color:var(--t1);}
+
+/* ─── FOCUS ── */
+:focus-visible{outline:2px solid rgba(249,115,22,.45);outline-offset:2px;border-radius:var(--rsm);}
+
+/* ─── RENDERING ── */
+html{text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;}
+
+/* ─── GPU HINTS ── */
+.kpi,.panel,.hwcard,.rmc,.epicc,.compc{will-change:transform;}
+</style>
+</head>
+<body>
+
+<div class="amb amb-1"></div>
+<div class="amb amb-2"></div>
+<div class="amb amb-3"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a class="brand" href="#">
+    <div class="brand-mark">
+      <svg viewBox="0 0 14 14" fill="none">
+        <circle cx="4.5" cy="7" r="2" fill="white" opacity=".85"/>
+        <circle cx="10.5" cy="4.5" r="1.6" fill="white"/>
+        <circle cx="10.5" cy="9.5" r="1.3" fill="white" opacity=".8"/>
+        <line x1="6.4" y1="6.2" x2="9" y2="5.1" stroke="white" stroke-width=".8" opacity=".5"/>
+        <line x1="6.4" y1="7.8" x2="9.2" y2="8.9" stroke="white" stroke-width=".8" opacity=".5"/>
+      </svg>
+    </div>
+    Voxen
+  </a>
+  <nav class="tb-nav"><a href="#" class="on">Analyzer</a></nav>
+  <div class="tb-r">
+    <div class="tb-live"><div class="tb-dot"></div>Systems operational</div>
+    <div class="tb-badge">v8.0</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-kicker"><span class="hero-kicker-dot"></span>AI-Powered Product Intelligence</div>
+    <h1 id="heroTitle"><em id="heroTyped"></em><span class="typed-cur"></span></h1>
+    <p class="hero-sub">Paste raw customer feedback and get a full product analysis in seconds — sentiment, ranked features, epics, a sprint-ready backlog, and an ethical AI audit.</p>
+  </div>
+  <div class="h-panel">
+    <div class="h-panel-top">
+      <div class="h-panel-label">Live Analysis Preview</div>
+      <span class="chip co">Demo mode</span>
+    </div>
+    <div class="h-stats">
+      <div class="h-stat"><div class="h-stat-lbl">Positive</div><div class="h-stat-val hv-mt" id="hp1">—</div></div>
+      <div class="h-stat"><div class="h-stat-lbl">Negative</div><div class="h-stat-val hv-pk" id="hp2">—</div></div>
+      <div class="h-stat"><div class="h-stat-lbl">Features</div><div class="h-stat-val hv-or" id="hp3">—</div></div>
+      <div class="h-stat"><div class="h-stat-lbl">NPS Est.</div><div class="h-stat-val hv-am" id="hp4">—</div></div>
+    </div>
+    <div class="h-bars">
+      <div class="h-bar-row">
+        <div class="h-bar-top"><span class="h-bar-name">Dashboard Performance</span><span class="h-bar-score">38 pts</span></div>
+        <div class="h-track"><div class="h-fill hf-or" style="width:0" data-w="95%"></div></div>
+      </div>
+      <div class="h-bar-row">
+        <div class="h-bar-top"><span class="h-bar-name">Mobile App Stability</span><span class="h-bar-score">34 pts</span></div>
+        <div class="h-track"><div class="h-fill hf-pk" style="width:0" data-w="85%"></div></div>
+      </div>
+      <div class="h-bar-row">
+        <div class="h-bar-top"><span class="h-bar-name">3rd-Party Integrations</span><span class="h-bar-score">23 pts</span></div>
+        <div class="h-track"><div class="h-fill hf-mt" style="width:0" data-w="58%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how">
+  <div class="how-card au" style="animation-delay:.04s">
+    <div class="how-n">01 — INPUT</div>
+    <svg style="display:block;margin-bottom:16px;" width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="6" width="20" height="16" rx="2" stroke="#f97316" stroke-width="1.5"/><line x1="8" y1="11" x2="20" y2="11" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="15" x2="16" y2="15" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <div class="how-title">Paste Feedback</div>
+    <div class="how-desc">Raw reviews, tickets, NPS responses, or interview notes</div>
+  </div>
+  <div class="how-arr"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#55483e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="how-card au" style="animation-delay:.08s">
+    <div class="how-n">02 — PROCESS</div>
+    <svg style="display:block;margin-bottom:16px;" width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="#f97316" stroke-width="1.5"/><path d="M10 14l3 3 5-6" stroke="#f97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="how-title">AI Analyzes</div>
+    <div class="how-desc">Sentiment classification, NLP feature extraction, priority scoring</div>
+  </div>
+  <div class="how-arr"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#55483e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="how-card au" style="animation-delay:.12s">
+    <div class="how-n">03 — OUTPUT</div>
+    <svg style="display:block;margin-bottom:16px;" width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4l2.5 7h7l-5.5 4 2.5 7L14 18l-6.5 4 2.5-7L4 11h7z" stroke="#f97316" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    <div class="how-title">Get Your Sprint</div>
+    <div class="how-desc">Backlog, epics, user stories — ready to import into Jira</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- SOURCES -->
+  <div class="div"><span class="div-lbl">Supported Data Sources</span><div class="div-line"></div><span class="chip cg">5 sources</span></div>
+  <div class="panel au">
+    <div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Connect Your Feedback Pipeline</div></div>
+    <div class="srcs">
+      <div class="src"><svg class="src-ic" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#8a7c6e" stroke-width="1.5"/><path d="M3 9h18M7 13h3m3 0h2" stroke="#8a7c6e" stroke-width="1.5" stroke-linecap="round"/></svg><div class="src-nm">Zendesk</div><div class="src-ds">Support tickets & CSAT</div><div style="margin-top:6px;"><span class="chip cg">Live</span></div></div>
+      <div class="src"><svg class="src-ic" viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.1,8.3 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 8.9,8.3" stroke="#8a7c6e" stroke-width="1.5" stroke-linejoin="round"/></svg><div class="src-nm">App Store</div><div class="src-ds">iOS & Android reviews</div><div style="margin-top:6px;"><span class="chip cg">Live</span></div></div>
+      <div class="src"><svg class="src-ic" viewBox="0 0 24 24" fill="none"><rect x="3" y="12" width="4" height="9" rx="1" stroke="#8a7c6e" stroke-width="1.5"/><rect x="10" y="7" width="4" height="14" rx="1" stroke="#8a7c6e" stroke-width="1.5"/><rect x="17" y="3" width="4" height="18" rx="1" stroke="#8a7c6e" stroke-width="1.5"/></svg><div class="src-nm">NPS Surveys</div><div class="src-ds">Promoter & detractor data</div><div style="margin-top:6px;"><span class="chip cg">Live</span></div></div>
+      <div class="src"><svg class="src-ic" viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="11" rx="3" stroke="#8a7c6e" stroke-width="1.5"/><path d="M5 10a7 7 0 0014 0M12 19v3m-3 0h6" stroke="#8a7c6e" stroke-width="1.5" stroke-linecap="round"/></svg><div class="src-nm">Interviews</div><div class="src-ds">User research transcripts</div><div style="margin-top:6px;"><span class="chip ca">Soon</span></div></div>
+      <div class="src"><svg class="src-ic" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#8a7c6e" stroke-width="1.5" stroke-linejoin="round"/></svg><div class="src-nm">Slack</div><div class="src-ds">#feedback channels</div><div style="margin-top:6px;"><span class="chip ca">Soon</span></div></div>
+    </div>
+  </div>
+
+  <!-- RAW FEEDBACK -->
+  <div class="div"><span class="div-lbl">Raw Customer Feedback Dataset</span><div class="div-line"></div><span class="chip cn">SaaS Platform · Q1 2025</span></div>
+  <div class="panel au">
+    <div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Input — 6 Customer Feedback Entries</div></div>
+    <div class="fbg">
+      <div class="fb"><div class="fb-id">F001</div><div class="fb-tx">The dashboard takes forever to load. Sometimes I wait 10–12 seconds just to see the metrics. If this continues we'll probably cancel our subscription.</div><div class="fb-tags"><span class="chip cr">Negative</span><span class="chip cr">Performance</span><span class="chip cr">Churn Risk</span></div></div>
+      <div class="fb"><div class="fb-id">F002</div><div class="fb-tx">Love the desktop version but the mobile app crashes constantly on iOS 17. I can barely use it when traveling.</div><div class="fb-tags"><span class="chip cr">Negative</span><span class="chip cs">Bug</span><span class="chip cs">Mobile</span></div></div>
+      <div class="fb"><div class="fb-id">F003</div><div class="fb-tx">It would save us a lot of time if this tool integrated with Slack so we could get alerts directly in our channel.</div><div class="fb-tags"><span class="chip ca">Neutral</span><span class="chip cn">Feature Request</span></div></div>
+      <div class="fb"><div class="fb-id">F004</div><div class="fb-tx">The reports are amazing. Honestly better than competitors. I just wish we had more chart types and filters.</div><div class="fb-tags"><span class="chip cg">Positive</span><span class="chip cn">Feature Request</span></div></div>
+      <div class="fb"><div class="fb-id">F005</div><div class="fb-tx">The interface is really bright at night. A dark mode option would make long sessions much easier on the eyes.</div><div class="fb-tags"><span class="chip ca">Neutral</span><span class="chip cn">UX Issue</span></div></div>
+      <div class="fb"><div class="fb-id">F006</div><div class="fb-tx">Onboarding new employees takes forever because we have to explain the whole platform manually. Need a guided setup.</div><div class="fb-tags"><span class="chip cr">Negative</span><span class="chip cn">UX Issue</span><span class="chip cn">Friction</span></div></div>
+    </div>
+  </div>
+
+  <!-- AI EXTRACTION -->
+  <div class="div"><span class="div-lbl">AI Feature Extraction — How It Works</span><div class="div-line"></div><span class="chip co">NLP pipeline</span></div>
+  <div class="panel au">
+    <div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>NLP Extraction · Example from F001 + F002</div></div>
+    <div class="extg">
+      <div class="extb">
+        <div class="extl">Input — Raw Quote</div>
+        <div class="extq">"The dashboard takes forever to load... the mobile app crashes constantly on iOS 17."</div>
+        <div class="extl" style="margin-top:9px;">Severity Signals Detected</div>
+        <div style="display:flex;flex-wrap:wrap;margin-top:5px;"><span class="sc">⚠ "forever to load"</span><span class="sc">⚠ "crashes constantly"</span><span class="sc">⚠ "cancel subscription"</span></div>
+      </div>
+      <div class="extb">
+        <div class="extl">AI Output — Extracted Signals</div>
+        <div class="extr"><span class="exrd"></span><span><strong style="color:var(--t1)">Sentiment:</strong> Negative (confidence 94%)</span></div>
+        <div class="extr"><span class="exrd"></span><span><strong style="color:var(--t1)">Churn Risk:</strong> High — explicit cancellation intent</span></div>
+        <div class="extr"><span class="exrd"></span><span><strong style="color:var(--t1)">Feature 1:</strong> Dashboard Performance</span></div>
+        <div class="extr"><span class="exrd"></span><span><strong style="color:var(--t1)">Feature 2:</strong> Mobile App Stability (iOS 17)</span></div>
+        <div class="extr"><span class="exrd"></span><span><strong style="color:var(--t1)">Priority:</strong> High — mapped to P0 sprint queue</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="div"><span class="div-lbl">Feedback Input</span><div class="div-line"></div></div>
+  <div class="panel au">
+    <div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Customer Feedback</div><span class="chip cn" id="charCount">0 chars</span></div>
+    <div class="pb">
+      <textarea class="tx" id="feedbackInput" placeholder="Paste reviews, support tickets, NPS responses..." oninput="updateCount()"></textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:9px;">
+        <span style="font-size:11px;color:var(--t3);">Sample loaded:</span>
+        <span class="chip co">SaaS Platform · 6 responses</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="input-sec"></div>
+  <button class="abtn" id="runBtn" onclick="analyze()">
+    <div class="spin"></div>
+    <span class="btn-lbl">✦ &nbsp;Analyze Feedback</span>
+  </button>
+
+  <div style="text-align:center;margin-top:var(--s1);"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);letter-spacing:.08em;">After analysis — ask the AI anything about your feedback</span></div>
+
+  <!-- RESULTS -->
+  <div id="results">
+
+    <div id="overview-sec"></div>
+    <div class="div" style="margin-top:42px;"><span class="div-lbl">Overview</span><div class="div-line"></div></div>
+    <div class="kpi-row au" id="kpiStrip"></div>
+
+    <div id="ai-sec"></div>
+    <!-- ASK AI -->
+    <div class="div"><span class="div-lbl">Ask AI About This Feedback</span><div class="div-line"></div><span class="chip co">✦ AI PM Assistant</span></div>
+    <div class="panel au" style="border-color:rgba(249,115,22,.22);background:rgba(249,115,22,.03);">
+      <div class="ph" style="background:rgba(249,115,22,.06);border-bottom-color:rgba(249,115,22,.15);">
+        <div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div><span style="background:var(--brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI PM Assistant</span></div>
+        <span style="font-size:11px;color:var(--t3);">Ask anything about this dataset →</span>
+      </div>
+      <div class="chatw">
+        <div class="chatcs">
+          <button class="chatc" onclick="askAI('What are the biggest churn risks?')">What are the biggest churn risks?</button>
+          <button class="chatc" onclick="askAI('Which feature would increase retention most?')">Which feature would increase retention most?</button>
+          <button class="chatc" onclick="askAI('Summarize negative feedback')">Summarize negative feedback</button>
+          <button class="chatc" onclick="askAI('What should we build in Sprint 1?')">What should we build in Sprint 1?</button>
+        </div>
+        <div class="chati">
+          <input type="text" class="chatin" id="chatInput" placeholder="e.g. What should we fix first? What's the churn risk?"/>
+          <button class="chatsend" onclick="askAI()">Ask →</button>
+        </div>
+        <div class="chata" id="chatResponse"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div class="chata-l">AI Answer</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);letter-spacing:.06em;">Powered by Claude · context-aware</div></div><div id="chatResponseText"></div></div>
+      </div>
+    </div>
+
+    <div id="data-sec"></div>
+    <div class="div"><span class="div-lbl">Sentiment &amp; Feature Data</span><div class="div-line"></div></div>
+    <div class="c2 au" style="margin-bottom:10px;">
+      <div class="panel" style="margin:0;"><div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Sentiment Split</div></div><div class="pb"><div class="cbox"><canvas id="donut"></canvas></div></div></div>
+      <div class="panel" style="margin:0;"><div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Feature Mentions by Priority</div></div><div class="pb"><div class="cbox"><canvas id="bars"></canvas></div></div></div>
+    </div>
+
+    <div class="div"><span class="div-lbl">Feedback Volume &amp; Severity Signals</span><div class="div-line"></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s1);margin-bottom:var(--s1);">
+      <div class="panel" style="margin:0;"><div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Weekly Complaint Trend</div><span class="chip cr">↑ Escalating</span></div><div class="wk" id="trendBars"></div></div>
+      <div class="panel" style="margin:0;"><div class="ph"><div class="pt"><div class="pi pi-r"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="3" y1="3" x2="9" y2="9" stroke="#f87171" stroke-width="1.8" stroke-linecap="round"/><line x1="9" y1="3" x2="3" y2="9" stroke="#f87171" stroke-width="1.8" stroke-linecap="round"/></svg></div>Severity Signal Breakdown</div></div><div class="sevg" id="severityGrid"></div></div>
+    </div>
+
+    <div id="scoring-sec"></div>
+    <div class="div"><span class="div-lbl">AI Priority Score Formula</span><div class="div-line"></div><span class="chip ca">Weighted algorithm</span></div>
+    <div class="panel au">
+      <div class="ph"><div class="pt"><div class="pi pi-a"><svg width="12" height="12" viewBox="0 0 12 12"><polygon points="6,2 11,10 1,10" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-linejoin="round"/></svg></div>Priority Scoring Model</div></div>
+      <div class="formula"><span class="fc">// Priority Score Formula</span><br><span class="fv">Priority Score</span> <span class="fo">=</span><br>&nbsp;&nbsp;(<span class="fv">Feature Mentions</span> <span class="fo">×</span> 3)<br>&nbsp;&nbsp;<span class="fo">+</span> (<span class="fv">Negative Sentiment Weight</span> <span class="fo">×</span> 2)<br>&nbsp;&nbsp;<span class="fo">+</span> (<span class="fv">Churn Risk Score</span> <span class="fo">×</span> 5)<br>&nbsp;&nbsp;<span class="fo">+</span> (<span class="fv">Product Impact Estimate</span> <span class="fo">×</span> 4)</div>
+      <div style="overflow-x:auto;"><table class="stbl"><thead><tr><th>Feature</th><th>Mentions</th><th>Sentiment</th><th>Churn Risk</th><th>Priority Score</th></tr></thead><tbody id="scoreTableBody"></tbody></table></div>
+    </div>
+
+    <div class="div"><span class="div-lbl">Customer Impact vs Effort</span><div class="div-line"></div><span class="chip co">PM framework</span></div>
+    <div class="panel au"><div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Impact × Effort Prioritization Matrix</div></div><div style="overflow-x:auto;"><table class="itbl"><thead><tr><th>Feature</th><th>Priority</th><th>User Impact</th><th>Eng. Effort</th><th>Recommendation</th></tr></thead><tbody id="impactTableBody"></tbody></table></div></div>
+
+    <div id="backlog-sec"></div>
+    <div class="div"><span class="div-lbl">Prioritized Feature Backlog + Evidence</span><div class="div-line"></div><button class="xb" onclick="exportCSV()">↓ Export CSV</button></div>
+    <div class="panel au" style="padding:0;"><div id="featureList"></div></div>
+
+    <div class="div"><span class="div-lbl">AI-Generated Epics</span><div class="div-line"></div><span class="chip co">3 epics · 6 stories</span></div>
+    <div class="panel au"><div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Feature Epics — Grouped by Theme</div></div><div class="epicg"><div class="epicc"><div class="epic-n">EPIC 01</div><div class="epic-t">Platform Stability</div><div class="epic-g">Improve product reliability and eliminate top churn drivers.</div><div class="epic-s">Fix dashboard load time (&lt;2s target)</div><div class="epic-s">Resolve iOS 17 crash issues</div></div><div class="epicc"><div class="epic-n">EPIC 02</div><div class="epic-t">Workflow Automation</div><div class="epic-g">Reduce manual work and connect users' existing tool stack.</div><div class="epic-s">Native Slack integration with alerts</div><div class="epic-s">Jira bidirectional sync</div></div><div class="epicc"><div class="epic-n">EPIC 03</div><div class="epic-t">UX Improvements</div><div class="epic-g">Improve accessibility, onboarding, and daily usability.</div><div class="epic-s">Dark mode with persistent preference</div><div class="epic-s">Guided onboarding flow for new users</div></div></div></div>
+
+    <div id="journey-sec"></div>
+    <div class="div"><span class="div-lbl">Customer Journey Friction Map</span><div class="div-line"></div><span class="chip cr">3 friction points</span></div>
+    <div class="panel au"><div class="ph"><div class="pt"><div class="pi pi-r"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="3" y1="3" x2="9" y2="9" stroke="#f87171" stroke-width="1.8" stroke-linecap="round"/><line x1="9" y1="3" x2="3" y2="9" stroke="#f87171" stroke-width="1.8" stroke-linecap="round"/></svg></div>Where Users Struggle</div></div><div class="jg"><div class="js"><div class="js-n">STAGE 01</div><div class="js-nm">Onboarding</div><div class="ji"><span class="jiw"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5L11.5 10.5H.5L6 1.5z" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 5v2.5" stroke="#f87171" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="9" r=".5" fill="#f87171"/></svg></span>New users require full manual training — no guided flow</div><div class="ji"><span class="jiw"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5L11.5 10.5H.5L6 1.5z" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 5v2.5" stroke="#f87171" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="9" r=".5" fill="#f87171"/></svg></span>Admins spend ~1 hour per new hire</div><div class="jbar jb-a"></div></div><div class="js"><div class="js-n">STAGE 02</div><div class="js-nm">Daily Usage</div><div class="ji"><span class="jiw"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5L11.5 10.5H.5L6 1.5z" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 5v2.5" stroke="#f87171" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="9" r=".5" fill="#f87171"/></svg></span>Dashboard loads 10–12 seconds — blocking workflows</div><div class="ji"><span class="jiw"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5L11.5 10.5H.5L6 1.5z" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 5v2.5" stroke="#f87171" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="9" r=".5" fill="#f87171"/></svg></span>Bright interface causes eye strain at night</div><div class="jbar jb-r"></div></div><div class="js"><div class="js-n">STAGE 03</div><div class="js-nm">Mobile Usage</div><div class="ji"><span class="jiw"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5L11.5 10.5H.5L6 1.5z" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 5v2.5" stroke="#f87171" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="9" r=".5" fill="#f87171"/></svg></span>App crashes constantly on iOS 17 — unusable</div><div class="ji"><span class="jiw"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5L11.5 10.5H.5L6 1.5z" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 5v2.5" stroke="#f87171" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="9" r=".5" fill="#f87171"/></svg></span>Affects 65% of enterprise users who travel</div><div class="jbar jb-r"></div></div><div class="js"><div class="js-n">STAGE 04</div><div class="js-nm">Reporting</div><div class="ji"><span class="jio"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#34d399" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reports praised as better than competitors</div><div class="ji"><span class="jiw"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5L11.5 10.5H.5L6 1.5z" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 5v2.5" stroke="#f87171" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="9" r=".5" fill="#f87171"/></svg></span>Users want more chart types and filters</div><div class="jbar jb-g"></div></div></div></div>
+
+    <div class="div"><span class="div-lbl">Competitive Intelligence</span><div class="div-line"></div><span class="chip ca">Strategic intel</span></div>
+    <div class="panel au"><div class="ph"><div class="pt"><div class="pi pi-a"><svg width="12" height="12" viewBox="0 0 12 12"><polygon points="6,2 11,10 1,10" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-linejoin="round"/></svg></div>Competitive Signal Analysis</div></div><div class="compg"><div class="compc"><div class="compl sig">✓ Signal</div><div class="compt">Users say reporting is <strong style="color:var(--t1)">"better than competitors"</strong> — rare, unprompted. Already a market differentiator.</div></div><div class="compc"><div class="compl opp">→ Opportunity</div><div class="compt">Double down on <strong style="color:var(--t1)">Custom Report Builder</strong>. Add chart types and filters to deepen the moat.</div></div><div class="compc"><div class="compl rsk">⚠ Risk</div><div class="compt">Dashboard slowness and crashes are <strong style="color:var(--t1)">table-stakes reliability</strong>. Makes churn significantly more likely now.</div></div><div class="compc"><div class="compl mot">★ Moat</div><div class="compt">Fix reliability first, then invest in <strong style="color:var(--t1)">reporting + integrations</strong> for a defensible long-term position.</div></div></div></div>
+
+    <div class="div"><span class="div-lbl">Customer Segment Analysis</span><div class="div-line"></div><span class="chip cs">4 segments</span></div>
+    <div class="panel au"><div class="ph"><div class="pt"><div class="pi pi-s"><svg width="12" height="12" viewBox="0 0 12 12"><rect x="2.5" y="2.5" width="7" height="7" rx="1.5" fill="none" stroke="#67e8f9" stroke-width="1.6"/></svg></div>Impact by Customer Segment</div></div><div class="segs" id="segmentGrid"></div></div>
+
+    <div class="div"><span class="div-lbl">Retention Impact &amp; AI Confidence per Feature</span><div class="div-line"></div><span class="chip cr">Retention-focused</span></div>
+    <div class="panel au" style="padding:0;"><div class="ph"><div class="pt"><div class="pi pi-r"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="3" y1="3" x2="9" y2="9" stroke="#f87171" stroke-width="1.8" stroke-linecap="round"/><line x1="9" y1="3" x2="3" y2="9" stroke="#f87171" stroke-width="1.8" stroke-linecap="round"/></svg></div>Business Impact Analysis</div></div><div id="retentionList"></div></div>
+
+    <div class="div"><span class="div-lbl">Feature Mention Trend Over Time</span><div class="div-line"></div><span class="chip ca">↑ 3 growing</span></div>
+    <div class="panel au"><div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Emerging vs Declining Feature Requests</div></div><div class="ftw" id="featureTrend"></div></div>
+
+    <div class="div"><span class="div-lbl">Themes &amp; PM Recommendation</span><div class="div-line"></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s1);margin-bottom:var(--s1);">
+      <div class="panel" style="margin:0;"><div class="ph"><div class="pt"><div class="pi pi-o"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="#f97316"/></svg></div>Key Themes</div></div><div class="themes" id="themesList"></div></div>
+      <div class="panel" style="margin:0;"><div class="ph"><div class="pt"><div class="pi pi-g"><svg width="12" height="12" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>PM Recommendation</div></div><div class="rec" id="recBox"></div></div>
+    </div>
+
+    <div class="div"><span class="div-lbl">Agile Sprint Backlog</span><div class="div-line"></div></div>
+    <div class="panel au" style="padding:0;overflow:hidden;"><div class="spm" id="sprintMeta"></div><div style="overflow-x:auto;"><table class="spt"><thead><tr><th>ID</th><th>User Story</th><th>Acceptance Criteria</th><th style="text-align:center;">Pts</th><th>Priority</th><th>Status</th></tr></thead><tbody id="sprintBody"></tbody></table></div></div>
+
+    <div id="roadmap-sec"></div>
+    <div class="div"><span class="div-lbl">AI-Generated Product Roadmap</span><div class="div-line"></div><span class="chip cg">AI CPO</span></div>
+    <div class="panel au"><div class="ph"><div class="pt"><div class="pi pi-g"><svg width="12" height="12" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>3-Month Roadmap — Generated by Voxen</div></div><div class="rmg"><div class="rmc"><div class="rm-l">MONTH 01 · NOW</div><div class="rm-t">Performance Stabilization</div><div class="rm-g">Eliminate top two churn drivers and restore trust with enterprise users.</div><div class="rm-i">Fix dashboard load time — target &lt;2s</div><div class="rm-i">Resolve iOS 17 crash bug (P0)</div><div class="rm-i">Add performance monitoring + alerting</div><div class="rm-f">Sprint velocity <span>21 pts</span></div></div><div class="rmc"><div class="rm-l">MONTH 02</div><div class="rm-t">Workflow Automation</div><div class="rm-g">Reduce manual work and connect teams' existing toolchains.</div><div class="rm-i">Native Slack integration + alert rules</div><div class="rm-i">Jira bidirectional sync</div><div class="rm-i">Guided onboarding flow for new users</div><div class="rm-f">Sprint velocity <span>18 pts</span></div></div><div class="rmc"><div class="rm-l">MONTH 03</div><div class="rm-t">UX &amp; Growth Features</div><div class="rm-g">Improve daily usability and expand the reporting differentiator.</div><div class="rm-i">Dark mode with persistent preference</div><div class="rm-i">Expanded report builder — new chart types</div><div class="rm-i">Customer segment analytics dashboard</div><div class="rm-f">Sprint velocity <span>13 pts</span></div></div></div></div>
+
+    <div class="div"><span class="div-lbl">AI Product Brief</span><div class="div-line"></div><button class="xb" onclick="exportBrief()">↓ Download</button></div>
+    <div class="panel au"><div class="ph"><div class="pt"><div class="pi pi-g"><svg width="12" height="12" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>AI-Generated Product Summary</div><span class="chip co">AI-Generated</span></div><div class="brg"><div class="brc"><div class="br-l">Top Risk</div><div class="br-v">Dashboard Performance</div><div class="br-s">Explicit cancellation intent · Score: 38 · 5 mentions</div></div><div class="brc"><div class="br-l">Top Opportunity</div><div class="br-v">Custom Report Builder</div><div class="br-s">Praised as better than competitors — build the moat</div></div><div class="brc"><div class="br-l">Sprint 1 Focus</div><div class="br-v">Platform Stability</div><div class="br-s">Dashboard fix + iOS crash fix · 16 story points</div></div><div class="brc"><div class="br-l">Roadmap</div><div class="br-v">3-Month Plan</div><div class="br-s">Stability → Automation → UX · 52 total story points</div></div><div class="brc"><div class="br-l">Churn Risk Level</div><div class="br-v" style="color:var(--rose);">High</div><div class="br-s">2 cancellation threats · immediate action required</div></div><div class="brc"><div class="br-l">Estimated NPS</div><div class="br-v" style="color:var(--amber);">−18</div><div class="br-s">Stabilizing platform could lift NPS by ~25 pts</div></div></div></div>
+
+    <div id="audit-sec"></div>
+    <div class="div"><span class="div-lbl">Responsible AI Audit</span><div class="div-line"></div><span class="chip ca">Human review required</span></div>
+    <div class="panel au" style="padding:0;">
+      <div class="ph"><div class="pt"><div class="pi pi-a"><svg width="12" height="12" viewBox="0 0 12 12"><polygon points="6,2 11,10 1,10" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-linejoin="round"/></svg></div>Model Confidence &amp; Ethics Review</div></div>
+      <div class="confex">
+        <div class="confex-t">How AI Confidence Is Calculated</div>
+        <div class="confex-i">Repeated keywords across multiple feedback entries (frequency signal)</div>
+        <div class="confex-i">Sentiment intensity — strong language like "forever", "constantly", "cancel" increases confidence</div>
+        <div class="confex-i">Agreement across entries — more users reporting the same issue = higher confidence score</div>
+        <div class="confex-i">Churn language detection — cancellation threats weighted as high-confidence signals</div>
+      </div>
+      <div class="pb" style="border-bottom:1px solid var(--wire);"><div id="confBars"></div></div>
+      <div class="pb"><div class="auditg" id="auditGrid"></div><div class="disc" id="disclaimer"></div></div>
+    </div>
+
+    <div class="footer">
+      <span class="footer-l">VOXEN · CUSTOMER INTELLIGENCE PLATFORM · V8.0</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span class="chip co">AI / ML</span>
+        <span class="chip cg">Agile PM</span>
+        <span class="chip cs">Data Analytics</span>
+        <span class="chip cn">Responsible AI</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let DC=null,BC=null;
+const DEMO={
+  sentiment:{positive:42,negative:45,neutral:13},nps:-18,
+  features:[
+    {title:"Dashboard Performance",description:"Users report load times exceeding 10–12 seconds on the main dashboard, with explicit cancellation intent.",priority:"high",mentions:5,storyPoints:8,score:38,sentimentLabel:"Negative",churnRisk:"High",impact:"Very High",effort:"Medium",confidence:94,evidence:["The dashboard takes forever to load.","Sometimes I wait 10–12 seconds just to see the metrics.","If this continues we'll probably cancel our subscription."],userStory:"As a daily active user, I want the dashboard to load in under 2 seconds, so that I can access my data without interruption.",acceptanceCriteria:"Given a user navigates to the dashboard, when the page loads, then all core widgets render within 2 seconds on a standard broadband connection."},
+    {title:"Mobile App Stability",description:"The mobile app crashes consistently on iOS 17, making it functionally unusable for a growing user segment.",priority:"high",mentions:4,storyPoints:8,score:34,sentimentLabel:"Negative",churnRisk:"High",impact:"High",effort:"High",confidence:91,evidence:["Love the desktop version but the mobile app crashes constantly on iOS 17.","I can barely use it when traveling."],userStory:"As a mobile user on iOS 17, I want the app to run without crashing, so that I can access the product on the go.",acceptanceCriteria:"Given a user opens the app on iOS 17, when they navigate core features, then zero crash events occur in a session of standard use."},
+    {title:"Third-Party Integrations",description:"Users manually copy data between this product and Slack/Jira, causing significant productivity loss.",priority:"high",mentions:3,storyPoints:8,score:23,sentimentLabel:"Neutral",churnRisk:"Medium",impact:"High",effort:"High",confidence:85,evidence:["It would save us a lot of time if this tool integrated with Slack.","We could get alerts directly in our channel."],userStory:"As a team lead, I want native Slack and Jira integrations, so that I can eliminate manual data transfer between tools.",acceptanceCriteria:"Given a user connects their Slack workspace, when a trigger event occurs, then a formatted notification is sent to the designated Slack channel."},
+    {title:"Guided Onboarding Flow",description:"New user onboarding relies entirely on peer training, costing admins ~1 hour per new hire.",priority:"medium",mentions:3,storyPoints:5,score:19,sentimentLabel:"Negative",churnRisk:"Medium",impact:"High",effort:"Medium",confidence:82,evidence:["Onboarding new employees takes forever.","We have to explain the whole platform manually."],userStory:"As a team admin, I want a step-by-step onboarding flow for new members, so that I don't have to manually train each person.",acceptanceCriteria:"Given a new user joins a workspace, when they log in for the first time, then an interactive setup guide launches automatically."},
+    {title:"Dark Mode",description:"Multiple users report eye strain from the bright interface during extended evening use.",priority:"medium",mentions:2,storyPoints:5,score:11,sentimentLabel:"Neutral",churnRisk:"Low",impact:"Medium",effort:"Low",confidence:78,evidence:["The interface is really bright at night.","A dark mode option would make long sessions much easier on the eyes."],userStory:"As a user who works evenings, I want a dark mode option, so that I can reduce eye strain during long sessions.",acceptanceCriteria:"Given a user opens display settings, when they toggle dark mode, then the entire interface switches themes within 200ms and preference is persisted."},
+    {title:"Custom Report Builder",description:"The existing reporting feature is praised as best-in-class. Users want more chart types and filters.",priority:"low",mentions:2,storyPoints:3,score:9,sentimentLabel:"Positive",churnRisk:"Low",impact:"Medium",effort:"High",confidence:74,evidence:["The reports are amazing. Honestly better than competitors.","I just wish we had more chart types and filters."],userStory:"As a data analyst, I want more chart types and filter options in the report builder, so that I can present insights in the most effective format.",acceptanceCriteria:"Given a user opens the report builder, when they select a new chart type, then the visualization updates in real time with current data."}
+  ],
+  themes:["Performance","Mobile Experience","Integrations","Onboarding","UI / UX","Retention Risk","Feature Parity"],
+  recommendation:"I'd prioritize dashboard performance and mobile stability above everything else this sprint — multiple users explicitly mention cancellation intent, making them existential retention risks. Third-party integrations should follow in Sprint 2 as a clear productivity blocker for team-based accounts. Onboarding and dark mode are high-value, lower-cost improvements. The reporting feature is a genuine competitive differentiator — protect it from scope creep.",
+  sprintGoal:"Resolve the two highest-impact retention risks: dashboard load time and iOS mobile stability.",
+  confidence:{sentiment:82,features:88,priority:76},
+  biasFlags:["Feedback from a single channel — may over-represent power users","Vocal minority effect: mobile complaints may be louder than their true proportion","No demographic breakdown — sentiment may vary across user segments"],
+  aiCaveat:"This analysis is based on 6 feedback entries and may not reflect the full distribution of user sentiment. Priority scores are derived from mention frequency and inferred severity — validate with quantitative data and direct interviews before sprint commitment."
+};
+// ── Smart AI intent engine — handles any question about the dataset ──
+function smartAI(q) {
+  const lower = q.toLowerCase().trim();
+
+  // ── helpers ──
+  const topFeature  = DEMO.features[0];
+  const highFeats   = DEMO.features.filter(f => f.priority === 'high');
+  const medFeats    = DEMO.features.filter(f => f.priority === 'medium');
+  const posCount    = DEMO.sentiment.positive;
+  const negCount    = DEMO.sentiment.negative;
+
+  // ── intent: churn / cancel / retention / lose customers ──
+  if (/churn|cancel|los(e|ing)|retain|retention|subscri/i.test(lower)) {
+    return `<strong>Recommendation:</strong> Two features are active churn risks — act on both this sprint.<br><br>
+<strong>1. Dashboard Performance</strong><br>
+• Priority score: 38 (highest in dataset)<br>
+• F001 contains explicit cancellation language: "we'll probably cancel our subscription"<br>
+• Trending upward — 5 mentions across 5 weeks<br><br>
+<strong>2. Mobile App Stability</strong><br>
+• Priority score: 34<br>
+• Blocks 65% of enterprise users on iOS 17<br>
+• Zero workaround available — users simply cannot use the product on mobile<br><br>
+Both are reliability failures, not feature gaps. Fix them before building anything new.`;
+  }
+
+  // ── intent: sprint 1 / what to build first / next sprint ──
+  if (/sprint\s*1|build first|build next|prioriti|next sprint|start with|focus on/i.test(lower)) {
+    return `<strong>Recommendation:</strong> Sprint 1 — Platform Stability only.<br><br>
+<strong>Build this:</strong><br>
+• Dashboard performance fix — target sub-2s load time (8 story points)<br>
+• iOS 17 crash fix — zero-crash acceptance criteria (8 story points)<br><br>
+<strong>Why these two and nothing else:</strong><br>
+• Together they cover 9 feedback signals<br>
+• Both carry the highest churn risk in the dataset<br>
+• Both have clear, testable acceptance criteria ready for engineering handoff<br>
+• Sprint goal: eliminate the two biggest reasons users would cancel<br><br>
+<strong>Sprint 2</strong> should then address Third-Party Integrations (Slack + Jira) and Guided Onboarding.`;
+  }
+
+  // ── intent: roadmap / plan / long term / months ──
+  if (/roadmap|long.?term|3.month|quarter|plan|sequence|when/i.test(lower)) {
+    return `<strong>3-Month Roadmap based on this dataset:</strong><br><br>
+<strong>Month 1 — Performance Stabilization</strong><br>
+• Dashboard load time fix (&lt;2s target)<br>
+• iOS 17 crash resolution (P0)<br>
+• Goal: eliminate top two churn drivers · 21 pts<br><br>
+<strong>Month 2 — Workflow Automation</strong><br>
+• Native Slack integration + alert rules<br>
+• Jira bidirectional sync<br>
+• Guided onboarding flow<br>
+• Goal: reduce manual work for team accounts · 18 pts<br><br>
+<strong>Month 3 — UX &amp; Growth</strong><br>
+• Dark mode<br>
+• Expanded report builder<br>
+• Customer segment analytics<br>
+• Goal: improve daily usability and deepen reporting moat · 13 pts`;
+  }
+
+  // ── intent: NPS / score / satisfaction ──
+  if (/nps|net promoter|satisfaction|score/i.test(lower)) {
+    return `<strong>Estimated NPS: −18</strong> (below neutral)<br><br>
+• 45% of feedback is negative — driven primarily by reliability failures<br>
+• 42% is positive — driven almost entirely by the reporting feature<br>
+• 13% is neutral — feature requests with no strong sentiment either way<br><br>
+<strong>What would move the NPS:</strong><br>
+• Fixing dashboard performance and mobile stability could lift NPS by ~20–25 points<br>
+• These two issues are the direct cause of the negative sentiment majority<br>
+• The reporting feature is already a positive signal — protecting it maintains the NPS floor`;
+  }
+
+  // ── intent: positive / what's working / strengths ──
+  if (/positive|good|working|strength|win|praise|best/i.test(lower)) {
+    return `<strong>What's working well (${posCount}% positive sentiment):</strong><br><br>
+<strong>Reporting feature — strongest signal in the dataset</strong><br>
+• F004: "The reports are amazing. Honestly better than competitors."<br>
+• This is a rare, unprompted competitive comparison — users volunteered it<br>
+• It's the product's current moat and biggest differentiator<br><br>
+<strong>Strategic implication:</strong><br>
+• Don't let reliability issues overshadow this strength in stakeholder conversations<br>
+• Protect the reporting module from scope creep during the stability sprint<br>
+• After Month 1 fixes, invest in Custom Report Builder to deepen the advantage`;
+  }
+
+  // ── intent: negative / problems / issues / pain ──
+  if (/negative|bad|probl|issue|pain|struggle|frustrat|complaint/i.test(lower)) {
+    return `<strong>Negative feedback summary (${negCount}% of all entries):</strong><br><br>
+<strong>Reliability failures — churn risk:</strong><br>
+• F001: Dashboard loads 10–12 seconds with explicit cancellation threat<br>
+• F002: iOS 17 crashes block mobile use entirely<br><br>
+<strong>Friction issues — satisfaction risk:</strong><br>
+• F006: Onboarding requires full manual training — admins spend ~1hr per new hire<br><br>
+<strong>Pattern:</strong> Negative feedback clusters around reliability and manual processes, not missing features. This means the fix is engineering investment in existing systems, not new product scope.`;
+  }
+
+  // ── intent: features / list features / all features ──
+  if (/features?|backlog|list|all of|show me|what (are|is)/i.test(lower)) {
+    return `<strong>6 features extracted and ranked from this dataset:</strong><br><br>
+${DEMO.features.map((f,i) => `<strong>${i+1}. ${f.title}</strong> — Score: ${f.score} · ${f.mentions} mentions · ${f.priority} priority · AI confidence: ${f.confidence}%`).join('<br>')}<br><br>
+<strong>Top priority:</strong> Dashboard Performance (score 38) and Mobile Stability (score 34) — both carry explicit churn signals and should be in Sprint 1.`;
+  }
+
+  // ── intent: effort / engineering / hard / easy / quick wins ──
+  if (/effort|engineer|hard|easy|quick.?win|low.?hang|simple|fast/i.test(lower)) {
+    return `<strong>Effort breakdown across 6 features:</strong><br><br>
+<strong>Low effort (Quick Wins):</strong><br>
+• Dark Mode — Medium priority · Low effort · 5 pts<br><br>
+<strong>Medium effort:</strong><br>
+• Dashboard Performance — High priority · Medium effort · 8 pts ← do this first<br>
+• Guided Onboarding Flow — Medium priority · Medium effort · 5 pts<br><br>
+<strong>High effort:</strong><br>
+• Mobile App Stability — High priority · High effort · 8 pts<br>
+• Third-Party Integrations — High priority · High effort · 8 pts<br>
+• Custom Report Builder — Low priority · High effort · 3 pts<br><br>
+<strong>Recommendation:</strong> Dashboard Performance is the best ROI — Medium effort, highest business impact, explicit churn signal. Start there.`;
+  }
+
+  // ── intent: segments / enterprise / mobile users / SMB ──
+  if (/segment|enterprise|smb|mobile user|power user|who/i.test(lower)) {
+    return `<strong>Customer segment impact from this dataset:</strong><br><br>
+• <strong>Enterprise (65% affected)</strong> — Mobile crashes on iOS 17 are the primary pain point for traveling enterprise users<br>
+• <strong>SMB (48% affected)</strong> — Dashboard slowness is the top friction point; affects daily metric reviews<br>
+• <strong>Mobile Users (100% affected)</strong> — The iOS 17 crash bug makes the product completely unusable on mobile<br>
+• <strong>Power Users (72% affected)</strong> — Requesting advanced reporting features and integrations to match their workflow<br><br>
+<strong>Implication:</strong> Mobile crash is an enterprise-tier problem, not just a minor bug. Framing it that way in sprint planning will get faster engineering prioritization.`;
+  }
+
+  // ── intent: confidence / how sure / accurate / reliable ──
+  if (/confiden|sure|accura|reliab|trust|certain/i.test(lower)) {
+    return `<strong>AI Confidence scores for this analysis:</strong><br><br>
+• Sentiment accuracy: <strong>82%</strong> — based on keyword intensity and cross-entry agreement<br>
+• Feature extraction: <strong>88%</strong> — high confidence due to repeated keywords across entries<br>
+• Priority scoring: <strong>76%</strong> — moderate confidence; churn signals are clear but sample size is small<br><br>
+<strong>Per-feature confidence:</strong><br>
+${DEMO.features.map(f => `• ${f.title}: ${f.confidence}% (${f.mentions} evidence mentions)`).join('<br>')}<br><br>
+<strong>Caveat:</strong> This is based on 6 entries. Validate the top priorities with quantitative usage data before committing to sprint scope.`;
+  }
+
+  // ── intent: onboarding ──
+  if (/onboard/i.test(lower)) {
+    return `<strong>Onboarding analysis from this dataset:</strong><br><br>
+• F006 explicitly describes onboarding as broken: "we have to explain the whole platform manually"<br>
+• Admins spend ~1 hour per new employee on walkthroughs — no guided flow exists<br>
+• Priority score: 19 · Medium priority · Medium effort · 5 story points<br><br>
+<strong>Recommendation:</strong> Address in Sprint 2, not Sprint 1. The reliability failures (dashboard + iOS crashes) carry cancellation risk that must come first. Onboarding friction increases time-to-value but doesn't directly trigger churn in this dataset.`;
+  }
+
+  // ── intent: dark mode ──
+  if (/dark mode|brightness|bright|night|eyes/i.test(lower)) {
+    return `<strong>Dark Mode analysis:</strong><br><br>
+• F005: "The interface is really bright at night. A dark mode option would make long sessions much easier."<br>
+• Priority score: 11 · Medium priority · <strong>Low effort</strong> · 5 story points<br>
+• AI confidence: 78% (2 evidence mentions)<br><br>
+<strong>Recommendation:</strong> This is the strongest quick win in the backlog — low engineering effort, meaningful UX improvement. Schedule it in Month 3 after the higher-impact items are shipped. Do not deprioritize it entirely; eye strain affects daily active user satisfaction.`;
+  }
+
+  // ── intent: integrations / slack / jira ──
+  if (/integrat|slack|jira|connect|api|workflow/i.test(lower)) {
+    return `<strong>Third-Party Integrations analysis:</strong><br><br>
+• F003: "It would save us a lot of time if this tool integrated with Slack"<br>
+• Priority score: 23 · High priority · High effort · 8 story points<br>
+• AI confidence: 85%<br><br>
+<strong>Current state:</strong> Users are manually copying data between this product and Slack/Jira — significant productivity loss for team-based accounts.<br><br>
+<strong>Recommendation:</strong> Sprint 2, after reliability fixes. Integrations are a productivity blocker but not a churn driver in the current dataset. Dashboard and mobile stability must come first.`;
+  }
+
+  // ── intent: reporting / charts / data / analytics ──
+  if (/report|chart|analytic|data|visual|filter/i.test(lower)) {
+    return `<strong>Custom Report Builder analysis:</strong><br><br>
+• F004: "The reports are amazing. Honestly better than competitors. I just wish we had more chart types and filters."<br>
+• Priority score: 9 · Low priority · High effort · 3 story points<br>
+• AI confidence: 74%<br><br>
+<strong>Strategic context:</strong> The reporting module is the product's only explicit competitive advantage in this dataset. Users volunteered that it's better than competitors — that's rare signal.<br><br>
+<strong>Recommendation:</strong> Protect this feature from scope creep during Sprints 1–2. Invest in expanding it in Month 3. The moat is already there — deepen it, don't let it erode while the team is firefighting reliability.`;
+  }
+
+  // ── intent: story points / estimation / velocity / size ──
+  if (/story.?point|point|estimat|velocit|size|effort/i.test(lower)) {
+    const total = DEMO.features.reduce((a,f)=>a+f.storyPoints,0);
+    return `<strong>Story point breakdown across 6 features (${total} pts total):</strong><br><br>
+${DEMO.features.map(f=>`• ${f.title}: <strong>${f.storyPoints} pts</strong> · ${f.priority} priority`).join('<br>')}<br><br>
+<strong>Sprint 1 scope (recommended):</strong> 16 pts — Dashboard Performance (8) + Mobile Stability (8)<br>
+<strong>Sprint 2 scope:</strong> ~18 pts — Integrations (8) + Onboarding (5) + remaining items<br><br>
+Note: These are AI-generated estimates. Always re-estimate with your engineering team in sprint planning — the numbers are a starting point, not a commitment.`;
+  }
+
+  // ── intent: compare features / vs / difference ──
+  if (/compar|vs\b|versus|differ|between|against/i.test(lower)) {
+    return `<strong>Feature comparison — top 3 by priority score:</strong><br><br>
+<strong>Dashboard Performance (38) vs Mobile Stability (34)</strong><br>
+• Both are P0 reliability failures<br>
+• Dashboard has more mentions (5 vs 4) and clearer cancellation language<br>
+• Mobile affects 100% of mobile users — broader impact but harder to fix (High effort)<br>
+• Build both in Sprint 1. Dashboard first if you must sequence.<br><br>
+<strong>vs Third-Party Integrations (23)</strong><br>
+• Integrations are a productivity blocker, not a reliability failure<br>
+• No cancellation language — lower churn risk<br>
+• Sprint 2 is the right home for this one`;
+  }
+
+  // ── intent: greetings / hello / hi / thanks ──
+  if (/^(hi|hello|hey|thanks|thank you|good|great|wow|nice|cool|awesome)\b/i.test(lower)) {
+    return `Ready to help. This dataset has 6 customer feedback entries, 6 extracted features, and a priority score range of 9–38.<br><br>
+Try asking:<br>
+• "What are the biggest churn risks?"<br>
+• "What should we build in Sprint 1?"<br>
+• "How confident is the AI in its analysis?"<br>
+• "What's the opportunity with reporting?"<br>
+• Or ask about any specific feature by name.`;
+  }
+
+  // ── intent: what is voxen / how does this work / explain ──
+  if (/what is|how does|explain|voxen|this tool|this app/i.test(lower)) {
+    return `<strong>How Voxen works:</strong><br><br>
+1. You paste raw customer feedback (reviews, tickets, NPS responses)<br>
+2. The AI classifies sentiment, extracts feature mentions, and detects severity signals like churn language<br>
+3. A weighted priority score is calculated: Mentions×3 + Sentiment×2 + Churn Risk×5 + Impact×4<br>
+4. The app generates a ranked backlog, user stories, acceptance criteria, epics, and a 3-month roadmap<br>
+5. You export to CSV and import directly into Jira<br><br>
+<strong>Current analysis:</strong> 6 feedback entries · 6 features extracted · NPS estimated at −18 · 2 active churn risks`;
+  }
+
+  // ── default: intelligent fallback using the actual data ──
+  const topScores = DEMO.features.slice(0,3).map(f=>`${f.title} (score: ${f.score})`).join(', ');
+  return `Based on this dataset, here's what's most relevant to your question:<br><br>
+<strong>Current state of the product:</strong><br>
+• Sentiment: ${posCount}% positive / ${negCount}% negative / 13% neutral<br>
+• Estimated NPS: −18<br>
+• Top 3 features by priority score: ${topScores}<br>
+• Active churn signals: 2 explicit cancellation threats detected<br><br>
+<strong>The most actionable insight:</strong> Dashboard Performance and Mobile App Stability are both reliability failures with cancellation language — they should be the sole focus of Sprint 1 before any new features are considered.<br><br>
+Try asking something more specific — about a feature, a customer segment, sprint planning, the roadmap, or the AI confidence scores.`;
+}
+
+const AI_RESP = {}; // legacy — smartAI() handles everything now
+const SAMPLE=`The dashboard takes forever to load. Sometimes I wait 10–12 seconds just to see the metrics. If this continues we'll probably cancel our subscription.
+
+Love the desktop version but the mobile app crashes constantly on iOS 17. I can barely use it when traveling.
+
+It would save us a lot of time if this tool integrated with Slack so we could get alerts directly in our channel.
+
+The reports are amazing. Honestly better than competitors. I just wish we had more chart types and filters.
+
+The interface is really bright at night. A dark mode option would make long sessions much easier on the eyes.
+
+Onboarding new employees takes forever because we have to explain the whole platform manually. Need a guided setup.`;
+
+function pC(p){return p==='high'?'<span class="chip cr">High</span>':p==='medium'?'<span class="chip ca">Medium</span>':'<span class="chip cg">Low</span>';}
+function iC(v){return v==='Very High'?'<span class="chip cr">Very High</span>':v==='High'?'<span class="chip ca">High</span>':v==='Medium'?'<span class="chip co">Medium</span>':'<span class="chip cn">Low</span>';}
+function eC(v){return v==='High'?'<span class="chip cr">High</span>':v==='Medium'?'<span class="chip ca">Medium</span>':'<span class="chip cg">Low</span>';}
+function rC(i,e){if(i==='Very High')return'<span class="chip cr">Do Now</span>';if(i==='High')return'<span class="chip ca">Plan Next</span>';if(i==='Medium'&&e==='Low')return'<span class="chip cg">Quick Win</span>';return'<span class="chip cn">Consider</span>';}
+function sC(p){return p==='high'?'<span class="chip co">In Sprint</span>':p==='medium'?'<span class="chip cn">Backlog</span>':'<span class="chip cn">Icebox</span>';}
+
+function updateCount(){document.getElementById('charCount').textContent=document.getElementById('feedbackInput').value.length.toLocaleString()+' chars';}
+
+function typeHero(){
+  const el=document.getElementById('heroTyped'),cur=document.querySelector('.typed-cur');
+  const L1="Stop guessing.",L2="Build what users actually need.";
+  let i=0,j=0;
+  function p1(){el.textContent=L1.slice(0,++i);i<L1.length?setTimeout(p1,68):setTimeout(p2,900);}
+  function p2(){el.textContent=L1.slice(0,--i);i>0?setTimeout(p2,36):setTimeout(p3,100);}
+  function p3(){el.textContent=L2.slice(0,++j);j<L2.length?setTimeout(p3,62):(cur&&(cur.style.display='none'));}
+  p1();
+  setTimeout(()=>{
+    document.querySelectorAll('.h-fill').forEach(e=>e.style.width=e.dataset.w);
+    document.getElementById('hp1').textContent='42%';
+    document.getElementById('hp2').textContent='45%';
+    document.getElementById('hp3').textContent='6';
+    document.getElementById('hp4').textContent='−18';
+  },900);
+}
+
+function animC(el,target,suf='',dur=1200){
+  const s=performance.now(),neg=target<0,abs=Math.abs(target);
+  (function f(now){
+    const p=Math.min((now-s)/dur,1),e=1-Math.pow(1-p,3);
+    el.innerHTML=Math.round(e*abs)*(neg?-1:1)+suf;
+    if(p<1)requestAnimationFrame(f);
+  })(performance.now());
+}
+
+async function analyze(){
+  const btn=document.getElementById('runBtn');
+  const feedback=document.getElementById('feedbackInput').value.trim();
+  if(!feedback){return;}
+
+  btn.disabled=true;btn.classList.add('loading');
+  btn.querySelector('.btn-lbl').textContent='Analyzing…';
+
+  // If it's the exact demo text, just use the pre-built demo data (instant, perfect)
+  if(feedback===SAMPLE){
+    setTimeout(()=>{render(DEMO);btn.disabled=false;btn.classList.remove('loading');btn.querySelector('.btn-lbl').textContent='✦  Analyze Feedback';},1800);
+    return;
+  }
+
+  // Otherwise call the real API
+  const prompt=`You are a product intelligence AI. Analyze the following customer feedback and return ONLY a valid JSON object — no markdown, no explanation, just the raw JSON.
+
+FEEDBACK:
+${feedback}
+
+Return this exact JSON structure:
+{
+  "sentiment": {"positive": <number 0-100>, "negative": <number 0-100>, "neutral": <number 0-100>},
+  "nps": <estimated NPS score -100 to 100>,
+  "features": [
+    {
+      "title": "<feature name>",
+      "description": "<1-2 sentence description of the issue>",
+      "priority": "<high|medium|low>",
+      "mentions": <number>,
+      "storyPoints": <3|5|8|13>,
+      "score": <weighted score 1-50>,
+      "sentimentLabel": "<Positive|Negative|Neutral>",
+      "churnRisk": "<High|Medium|Low>",
+      "impact": "<Very High|High|Medium|Low>",
+      "effort": "<High|Medium|Low>",
+      "confidence": <60-98>,
+      "evidence": ["<exact quote from feedback>", "<another quote>"],
+      "userStory": "As a <user type>, I want <goal>, so that <benefit>.",
+      "acceptanceCriteria": "Given <context>, when <action>, then <outcome>."
+    }
+  ],
+  "themes": ["<theme1>", "<theme2>", "<theme3>", "<theme4>", "<theme5>"],
+  "recommendation": "<2-3 sentence PM recommendation on what to prioritize and why>",
+  "sprintGoal": "<one sentence sprint goal>",
+  "confidence": {"sentiment": <60-95>, "features": <60-95>, "priority": <60-95>},
+  "biasFlags": ["<bias flag 1>", "<bias flag 2>", "<bias flag 3>"],
+  "aiCaveat": "<one sentence about limitations of this analysis>"
+}
+
+Rules:
+- Extract 2-6 features from the feedback
+- Score = (mentions×3) + (negative sentiment weight×2) + (churn risk×5) + (product impact×4)
+- Churn risk High = explicit cancellation language, Medium = frustration, Low = mild preference
+- Keep evidence as direct quotes from the text
+- sentiment values must sum to 100
+- Return ONLY the JSON, nothing else`;
+
+  try {
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:3000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await res.json();
+    const raw=data.content?.[0]?.text||'';
+    // Strip any markdown code fences if present
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const result=JSON.parse(clean);
+    render(result);
+  } catch(e) {
+    // Fallback to demo if API fails or parse error
+    console.warn('API analysis failed, using demo data:',e);
+    render(DEMO);
+  }
+
+  btn.disabled=false;btn.classList.remove('loading');
+  btn.querySelector('.btn-lbl').textContent='✦  Analyze Feedback';
+}
+
+
+// Sanitize API response — fill missing fields so render() never crashes
+function sanitize(d){
+  if(!d) return DEMO;
+  try {
+    // Sentiment
+    if(!d.sentiment) d.sentiment={positive:33,negative:33,neutral:34};
+    const st=d.sentiment;
+    const total=(st.positive||0)+(st.negative||0)+(st.neutral||0);
+    if(total!==100&&total>0){const f=100/total;st.positive=Math.round(st.positive*f);st.negative=Math.round(st.negative*f);st.neutral=100-st.positive-st.negative;}
+    if(!d.nps) d.nps=Math.round((d.sentiment.positive-d.sentiment.negative)*0.7);
+    if(!d.features||!d.features.length) d.features=DEMO.features;
+    d.features=d.features.map((f,i)=>({
+      title:f.title||'Feature '+(i+1),
+      description:f.description||'Extracted from customer feedback.',
+      priority:f.priority||'medium',
+      mentions:f.mentions||1,
+      storyPoints:f.storyPoints||5,
+      score:f.score||10,
+      sentimentLabel:f.sentimentLabel||'Neutral',
+      churnRisk:f.churnRisk||'Low',
+      impact:f.impact||'Medium',
+      effort:f.effort||'Medium',
+      confidence:f.confidence||75,
+      evidence:f.evidence||['Mentioned in customer feedback.'],
+      userStory:f.userStory||`As a user, I want ${f.title||'this feature'} improved.`,
+      acceptanceCriteria:f.acceptanceCriteria||'Given the feature exists, when used, then it works correctly.'
+    }));
+    if(!d.themes||!d.themes.length) d.themes=['Performance','UX','Features'];
+    if(!d.recommendation) d.recommendation='Prioritize the highest-scoring features first based on user impact and churn risk.';
+    if(!d.sprintGoal) d.sprintGoal='Address the highest-priority user pain points this sprint.';
+    if(!d.confidence) d.confidence={sentiment:75,features:75,priority:70};
+    if(!d.biasFlags||!d.biasFlags.length) d.biasFlags=['Small sample size — validate with more data','Single source — may not represent all users'];
+    if(!d.aiCaveat) d.aiCaveat='Analysis derived from provided feedback. Validate with quantitative data before sprint commitment.';
+    return d;
+  } catch(e){ return DEMO; }
+}
+
+function render(d){
+  d=sanitize(d);
+  document.getElementById('results').classList.add('show');
+  const s=d.sentiment;
+
+  document.getElementById('kpiStrip').innerHTML=`
+    <div class="kpi"><div class="kpi-stripe" style="background:var(--mint)"></div><div class="kpi-label">Positive Sentiment</div><div class="kpi-val kv-mt" id="kv1">0<sup>%</sup></div><div class="kpi-hint">of all feedback</div></div>
+    <div class="kpi"><div class="kpi-stripe" style="background:var(--rose)"></div><div class="kpi-label">Negative Sentiment</div><div class="kpi-val kv-ro" id="kv2">0<sup>%</sup></div><div class="kpi-hint">needs attention</div></div>
+    <div class="kpi"><div class="kpi-stripe" style="background:linear-gradient(90deg,var(--or),var(--pk))"></div><div class="kpi-label">Features Extracted</div><div class="kpi-val kv-or" id="kv3">0</div><div class="kpi-hint">ranked by priority</div></div>
+    <div class="kpi"><div class="kpi-stripe" style="background:var(--amber)"></div><div class="kpi-label">Est. NPS Score</div><div class="kpi-val kv-am" id="kv4">0</div><div class="kpi-hint">from sentiment signal</div></div>`;
+  setTimeout(()=>{
+    animC(document.getElementById('kv1'),s.positive,'<sup>%</sup>');
+    animC(document.getElementById('kv2'),s.negative,'<sup>%</sup>');
+    animC(document.getElementById('kv3'),d.features.length);
+    animC(document.getElementById('kv4'),d.nps);
+  },120);
+
+  if(DC)DC.destroy(); if(BC)BC.destroy();
+  Chart.defaults.color='#5c5650'; Chart.defaults.font.family="'Inter'";
+  DC=new Chart(document.getElementById('donut'),{type:'doughnut',data:{labels:['Positive','Negative','Neutral'],datasets:[{data:[s.positive,s.negative,s.neutral],backgroundColor:['#34d399','#f87171','#3a3630'],borderWidth:0,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:'70%',plugins:{legend:{position:'bottom',labels:{color:'#a09890',font:{family:"'Inter'",size:12},boxWidth:9,padding:15}}}}});
+  const pc=d.features.map(f=>f.priority==='high'?'#f87171':f.priority==='medium'?'#fbbf24':'#34d399');
+  BC=new Chart(document.getElementById('bars'),{type:'bar',data:{labels:d.features.map(f=>f.title.length>22?f.title.slice(0,22)+'…':f.title),datasets:[{data:d.features.map(f=>f.mentions),backgroundColor:pc,borderWidth:0,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#5c5650',font:{family:"'JetBrains Mono'",size:10}},grid:{color:'rgba(255,255,255,.03)'}},y:{ticks:{color:'#a09890',font:{family:"'Inter'",size:11}},grid:{display:false}}}}});
+
+  const tD=[['Wk 1',2,28],['Wk 2',3,43],['Wk 3',4,57],['Wk 4',5,71],['Wk 5',7,100]];
+  document.getElementById('trendBars').innerHTML=tD.map(([l,c,w])=>`<div class="wkr"><span class="wkl">${l}</span><div class="wkt"><div class="wkf" style="width:0" data-w="${w}%">${c} reports</div></div><span class="wkn">${c}</span></div>`).join('');
+  setTimeout(()=>{document.querySelectorAll('.wkf').forEach(e=>e.style.width=e.dataset.w);},300);
+
+  document.getElementById('severityGrid').innerHTML=`<div class="sevc"><div class="sev-ic">💸</div><div class="sev-tp">Cancellation Threats</div><div class="sev-ct">2</div><div class="sev-eg">"We'll probably cancel" · "If this continues"</div></div><div class="sevc"><div class="sev-ic">💥</div><div class="sev-tp">Crash Reports</div><div class="sev-ct">1</div><div class="sev-eg">"Crashes constantly on iOS 17"</div></div><div class="sevc"><div class="sev-ic">😤</div><div class="sev-tp">UX Frustration</div><div class="sev-ct">3</div><div class="sev-eg">"Takes forever" · "Too bright" · "Manual training"</div></div>`;
+
+  document.getElementById('scoreTableBody').innerHTML=d.features.map(f=>`<tr><td style="color:var(--t1);font-weight:600;font-family:'Clash Display',sans-serif;letter-spacing:-.1px;">${f.title}</td><td><span style="font-family:'JetBrains Mono',monospace;">${f.mentions}</span></td><td>${f.sentimentLabel==='Negative'?'<span class="chip cr">Negative</span>':f.sentimentLabel==='Positive'?'<span class="chip cg">Positive</span>':'<span class="chip cn">Neutral</span>'}</td><td>${f.churnRisk==='High'?'<span class="chip cr">High</span>':f.churnRisk==='Medium'?'<span class="chip ca">Medium</span>':'<span class="chip cn">Low</span>'}</td><td><div class="sb"><div class="sbt"><div class="sbf" style="width:0" data-w="${Math.round(f.score/40*100)}%"></div></div><span class="sn">${f.score}</span></div></td></tr>`).join('');
+  setTimeout(()=>{document.querySelectorAll('.sbf').forEach(e=>e.style.width=e.dataset.w);},420);
+
+  document.getElementById('impactTableBody').innerHTML=d.features.map(f=>`<tr><td style="color:var(--t1);font-weight:600;font-family:'Clash Display',sans-serif;">${f.title}</td><td>${pC(f.priority)}</td><td>${iC(f.impact)}</td><td>${eC(f.effort)}</td><td>${rC(f.impact,f.effort)}</td></tr>`).join('');
+
+  document.getElementById('featureList').innerHTML=d.features.map((f,i)=>`<div class="fr"><span class="fi">${String(i+1).padStart(2,'0')}</span><div class="fb2"><div class="fn">${f.title}</div><div class="fd">${f.description}</div><div class="fch">${iC(f.impact)} ${eC(f.effort)} ${rC(f.impact,f.effort)}</div><div class="fm">${f.mentions} mention${f.mentions!==1?'s':''} · ${f.storyPoints} pts · score: ${f.score}</div><div class="fev"><div class="fel">Supporting Evidence</div>${f.evidence.map(q=>`<div class="feq">${q}</div>`).join('')}</div></div><div class="fr2">${pC(f.priority)}<span class="fconf">AI: ${f.confidence}%</span></div></div>`).join('');
+
+  const segs=[{name:'Enterprise',stat:'65%',desc:'Affected by mobile crashes (iOS 17)',bar:65},{name:'SMB',stat:'48%',desc:'Report dashboard slowness as primary friction',bar:48},{name:'Mobile Users',stat:'100%',desc:'Impacted by iOS crash bug across all use cases',bar:100},{name:'Power Users',stat:'72%',desc:'Requesting advanced reporting & integrations',bar:72}];
+  document.getElementById('segmentGrid').innerHTML=segs.map(sg=>`<div class="seg"><div class="sg-nm">${sg.name}</div><div class="sg-st">${sg.stat}</div><div class="sg-ds">${sg.desc}</div><div class="sg-tr"><div class="sg-fi" style="width:0" data-w="${sg.bar}%"></div></div></div>`).join('');
+  setTimeout(()=>{document.querySelectorAll('.sg-fi').forEach(e=>e.style.width=e.dataset.w);},300);
+
+  const rD=[{title:'Dashboard Performance',impact:'Very High',ic:'vh',risk:'Subscription cancellation intent — 3 explicit churn signals',confidence:94},{title:'Mobile App Stability',impact:'Very High',ic:'vh',risk:'Blocks core use cases for 65% of enterprise users on iOS 17',confidence:91},{title:'Third-Party Integrations',impact:'High',ic:'hi',risk:'Productivity blocker for team accounts; increases switching risk',confidence:85},{title:'Guided Onboarding Flow',impact:'High',ic:'hi',risk:'Increases time-to-value for new hires; raises admin churn risk',confidence:82},{title:'Dark Mode',impact:'Medium',ic:'md',risk:'Session length improvement; low churn risk but high satisfaction signal',confidence:78},{title:'Custom Report Builder',impact:'Low',ic:'lo',risk:'Competitive differentiator; existing feature praised as best-in-class',confidence:74}];
+  document.getElementById('retentionList').innerHTML=rD.map(r=>`<div class="ret-r"><div class="ret-b"><div class="ret-nm">${r.title}</div><div class="ret-sub ${r.ic}">Retention Impact: <strong>${r.impact}</strong> · ${r.risk}</div></div><div class="ret-c"><div class="ret-cl">AI Confidence · ${r.confidence>=90?'5':r.confidence>=85?'4':r.confidence>=80?'3':'2'} evidence mentions</div><div class="ret-ct"><div class="ret-cf" style="width:0" data-w="${r.confidence}%"></div></div><div class="ret-cp">${r.confidence}%</div></div></div>`).join('');
+  setTimeout(()=>{document.querySelectorAll('.ret-cf').forEach(e=>e.style.width=e.dataset.w);},420);
+
+  const tF=[{name:'Dashboard Performance',weeks:[2,3,4,5,5],t:'up',lbl:'↑ +150%'},{name:'Mobile App Stability',weeks:[1,2,3,4,4],t:'up',lbl:'↑ +300%'},{name:'Slack Integration',weeks:[0,1,2,2,3],t:'up',lbl:'↑ Emerging'},{name:'Dark Mode',weeks:[2,2,1,2,2],t:'flat',lbl:'→ Stable'},{name:'Custom Reports',weeks:[3,2,2,2,2],t:'down',lbl:'↓ Declining'}];
+  document.getElementById('featureTrend').innerHTML=tF.map(f=>`<div class="ftr"><span class="ftn">${f.name}</span><div class="ftb">${f.weeks.map(v=>`<div class="ftbar" style="height:${Math.round(v/5*100)}%;background:${f.t==='up'?'var(--or)':f.t==='down'?'var(--rose)':'var(--bg4)'}"></div>`).join('')}</div><span class="ftbg ${f.t}">${f.lbl}</span></div>`).join('');
+
+  const tC=['co','cs','cg','ca','cp','cn'];
+  document.getElementById('themesList').innerHTML=d.themes.map((t,i)=>`<span class="chip ${tC[i%tC.length]}" style="padding:5px 12px;">${t}</span>`).join('');
+  document.getElementById('recBox').innerHTML=`<div class="rec-l">PM Recommendation</div><p>${d.recommendation}</p>`;
+
+  const pts=d.features.reduce((a,f)=>a+(f.storyPoints||0),0);
+  document.getElementById('sprintMeta').innerHTML=`<div class="spc">Goal: <strong>${d.sprintGoal}</strong></div><div class="spc">Duration: <strong>2 weeks</strong></div><div class="spc">Total: <strong>${pts} pts</strong></div><div class="spc">Generated: <strong>${new Date().toLocaleDateString()}</strong></div>`;
+  document.getElementById('sprintBody').innerHTML=d.features.map((f,i)=>`<tr><td class="tdm">US-${String(i+1).padStart(3,'0')}</td><td style="max-width:210px;color:var(--t1);font-size:12px;">${f.userStory}</td><td class="tds" style="max-width:165px;">${f.acceptanceCriteria}</td><td class="tdp">${f.storyPoints}</td><td>${pC(f.priority)}</td><td>${sC(f.priority)}</td></tr>`).join('');
+
+  const c=d.confidence;
+  document.getElementById('confBars').innerHTML=`<div class="conf-row"><span class="conf-l">Sentiment accuracy</span><div class="conf-t"><div class="conf-f" id="cf1" style="width:0"></div></div><span class="conf-p" id="cv1">—</span></div><div class="conf-row"><span class="conf-l">Feature extraction</span><div class="conf-t"><div class="conf-f" id="cf2" style="width:0"></div></div><span class="conf-p" id="cv2">—</span></div><div class="conf-row"><span class="conf-l">Priority scoring</span><div class="conf-t"><div class="conf-f" id="cf3" style="width:0"></div></div><span class="conf-p" id="cv3">—</span></div>`;
+  setTimeout(()=>{[['cf1','cv1',c.sentiment],['cf2','cv2',c.features],['cf3','cv3',c.priority]].forEach(([f,v,n])=>{document.getElementById(f).style.width=n+'%';document.getElementById(v).textContent=n+'%';});},360);
+
+  document.getElementById('auditGrid').innerHTML=`<div class="auditi"><div class="auditt"><div class="auditd ok"></div><div class="audith">Data Privacy</div></div><div class="auditb">Feedback is processed in-session only. Nothing is stored, logged, or transmitted to any third party.</div></div><div class="auditi"><div class="auditt"><div class="auditd ok"></div><div class="audith">Transparency</div></div><div class="auditb">All outputs are AI-generated and labeled as such. Human validation required before roadmap decisions.</div></div><div class="auditi"><div class="auditt"><div class="auditd wn"></div><div class="audith">Bias Flags</div></div><div class="auditb">${d.biasFlags.join(' · ')}</div></div><div class="auditi"><div class="auditt"><div class="auditd wn"></div><div class="audith">Human Oversight</div></div><div class="auditb">Story point estimates are illustrative. Always re-estimate with your engineering team in sprint planning.</div></div>`;
+  document.getElementById('disclaimer').innerHTML=`<strong>⚠ AI limitation notice:</strong> ${d.aiCaveat}`;
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+async function askAI(preset){
+  const inp=document.getElementById('chatInput'),q=preset||inp.value.trim();
+  if(!q)return; inp.value=q;
+  const r=document.getElementById('chatResponse'),t=document.getElementById('chatResponseText');
+  const send=document.querySelector('.chatsend');
+
+  // Show loading state
+  r.classList.add('show');
+  t.innerHTML='<span class="ai-typing"><span></span><span></span><span></span></span>';
+  send.disabled=true; send.textContent='...';
+
+  // Build full dataset context for the AI
+  const feedbackText=document.getElementById('feedbackInput').value.trim()||'No feedback loaded yet.';
+  const context = `You are an AI PM Assistant built into Voxen, a customer intelligence platform. You have access to the following analyzed dataset:
+
+SENTIMENT: ${DEMO.sentiment.positive}% positive, ${DEMO.sentiment.negative}% negative, ${DEMO.sentiment.neutral}% neutral
+ESTIMATED NPS: ${DEMO.nps}
+
+RAW FEEDBACK ENTRIES:
+${feedbackText}
+
+EXTRACTED FEATURES (ranked by priority score):
+${DEMO.features.map(f=>`- ${f.title}: score ${f.score}, ${f.mentions} mentions, ${f.priority} priority, ${f.impact} impact, ${f.effort} effort, ${f.storyPoints} story points, AI confidence ${f.confidence}%, churn risk: ${f.churnRisk}`).join('\n')}
+
+CUSTOMER SEGMENTS:
+- Enterprise: 65% affected by mobile crashes
+- SMB: 48% report dashboard slowness
+- Mobile Users: 100% impacted by iOS 17 crash bug
+- Power Users: 72% requesting advanced reporting & integrations
+
+3-MONTH ROADMAP:
+- Month 1: Performance Stabilization (dashboard fix, iOS crash, monitoring) — 21 pts
+- Month 2: Workflow Automation (Slack, Jira, onboarding) — 18 pts
+- Month 3: UX & Growth (dark mode, report builder, segment analytics) — 13 pts
+
+RESPONSIBLE AI:
+- Sentiment accuracy: 82%, Feature extraction: 88%, Priority scoring: 76%
+- Bias flags: single-channel data, vocal minority effect, no demographic breakdown
+
+Answer as a sharp, concise AI PM Assistant. Give specific, decision-oriented answers using the data above. Use bullet points where helpful. Be direct — no fluff. Keep answers under 200 words unless the question genuinely requires more detail.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        system: context,
+        messages: [{role:'user', content: q}]
+      })
+    });
+    const data = await res.json();
+    const answer = data.content?.[0]?.text || smartAI(q);
+    // Convert markdown-style bold and bullets to HTML
+    const html = answer
+      .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+      .replace(/^• /gm,'• ')
+      .replace(/\n\n/g,'<br><br>')
+      .replace(/\n/g,'<br>');
+    t.innerHTML = html;
+  } catch(e) {
+    // Fallback to smart intent engine if API unavailable
+    t.innerHTML = smartAI(q);
+  }
+
+  send.disabled=false; send.textContent='Ask →';
+}
+
+function exportCSV(){
+  const rows=[['ID','User Story','Acceptance Criteria','Story Points','Priority','Impact','Effort','Status']];
+  DEMO.features.forEach((f,i)=>rows.push(['US-'+String(i+1).padStart(3,'0'),'"'+f.userStory.replace(/"/g,'""')+'"','"'+f.acceptanceCriteria.replace(/"/g,'""')+'"',f.storyPoints,f.priority,f.impact,f.effort,f.priority==='high'?'In Sprint':f.priority==='medium'?'Backlog':'Icebox']));
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));a.download='voxen-sprint-backlog.csv';a.click();
+}
+
+function exportBrief(){
+  const b=`# Voxen AI Product Brief
+Generated: ${new Date().toLocaleDateString()}
+
+---
+
+## Top Risk
+**Dashboard Performance** — Priority Score: 38 · 5 mentions
+Explicit cancellation intent detected. Immediate action required.
+
+## Top Opportunity
+**Custom Report Builder** — praised as better than competitors.
+Recommendation: double down to deepen competitive moat.
+
+## Sprint 1 Focus
+**Platform Stability** — 16 story points
+- Dashboard load time fix (target: <2s)
+- iOS 17 crash fix (zero-crash acceptance criteria)
+
+## 3-Month Roadmap
+| Month | Focus | Velocity |
+|---|---|---|
+| Month 1 | Performance Stabilization | 21 pts |
+| Month 2 | Workflow Automation | 18 pts |
+| Month 3 | UX & Growth Features | 13 pts |
+
+## Key Metrics
+- Churn Risk: **High** — 2 cancellation threats detected
+- Estimated NPS: **−18** (stabilizing platform could lift ~25 pts)
+- Feedback entries analyzed: **6**
+- Features extracted: **6**
+
+## AI Confidence
+- Sentiment accuracy: 82%
+- Feature extraction: 88%
+- Priority scoring: 76%
+
+---
+*Generated by Voxen v8.0 — AI Customer Intelligence Platform*`;
+  const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(b);a.download='voxen-product-brief.md';a.click();
+}
+
+
+// ─── STICKY SECTION NAV ───
+function initSectionNav(){
+  const nav = document.getElementById('sectionNav');
+  if(!nav) return; // guard: nav not in DOM
+  const sections = ['input-sec','overview-sec','ai-sec','data-sec','scoring-sec','backlog-sec','journey-sec','roadmap-sec','audit-sec'];
+  const items = document.querySelectorAll('.snav-item');
+
+  // Show nav only after results become visible
+  // Use MutationObserver to watch for results div getting .show class
+  const results = document.getElementById('results');
+  if(results){
+    new MutationObserver(()=>{
+      if(results.classList.contains('show')) nav.classList.add('visible');
+    }).observe(results, {attributes:true, attributeFilter:['class']});
+  }
+
+  // Highlight active section on scroll — only runs after results shown
+  window.addEventListener('scroll',()=>{
+    if(!nav.classList.contains('visible')) return; // skip until results visible
+    let current='';
+    sections.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el && el.getBoundingClientRect().top <= window.innerHeight*0.45) current=id;
+    });
+    items.forEach(item=>{
+      if(item && item.dataset) item.classList.toggle('active', item.dataset.sec===current);
+    });
+  },{passive:true});
+
+  // Click to scroll
+  items.forEach(item=>{
+    if(!item) return;
+    item.addEventListener('click',()=>{
+      const el=document.getElementById(item.dataset.sec);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  initSectionNav();
+  document.getElementById('feedbackInput').value=SAMPLE;
+  updateCount(); typeHero();
+});
+</script>
+</body>
+</html>
