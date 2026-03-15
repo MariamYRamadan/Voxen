@@ -183,4 +183,4 @@ MIT — free to use, fork, and build on.
 
 ---
 
-*Built by Mariam Ramadan · IBM Product Manager Intern 2026*
+*Built by Mariam Ramadan*
