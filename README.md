@@ -183,4 +183,4 @@ MIT — free to use, fork, and build on.
 
 ---
 
-*Built by Mariam Ramadan*
+*Built by Mariam Elsayed*
